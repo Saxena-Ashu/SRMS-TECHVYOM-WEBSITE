@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - TECHVOYM 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #001f3f, #000);
+      color: #fff;
+      padding-top: 90px; /* Adjusted for larger nav */
+    }
+
+    /* Super-Stylish Navigation Bar (matching home.html) */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 15, 30, 0.6);
+      backdrop-filter: blur(12px);
+      padding: 15px 30px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 200, 0.3);
+      border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    nav::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, 
+        rgba(0, 255, 200, 0.05) 0%, 
+        transparent 100%);
+      transition: all 0.5s ease;
+      pointer-events: none;
+    }
+
+    nav:hover::before {
+      top: 0;
+    }
+
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.5),
+        transparent);
+      transition: left 1.5s ease;
+    }
+
+    nav:hover::after {
+      left: 100%;
+    }
+
+    nav .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 255, 200, 0.4) 0%, transparent 70%);
+      filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    nav .logo-container:hover .logo-glow {
+      opacity: 1;
+    }
+
+    nav .logo-icon {
+      font-size: 2rem;
+      color: #00ffc8;
+      animation: pulse 2s infinite ease-in-out;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 31, 63, 0.6);
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    nav .logo-container:hover .logo-icon {
+      transform: rotate(360deg);
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);
+    }
+
+    nav .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+      position: relative;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    nav .logo-container:hover .logo {
+      letter-spacing: 3px;
+      text-shadow: 0 0 15px rgba(0, 255, 200, 0.8);
+    }
+
+    nav .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transition: width 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      border-radius: 2px;
+    }
+
+    nav .logo-container:hover .logo::after {
+      width: 100%;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: #c0f0ff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 12px 20px;
+      border: 1px solid rgba(0, 255, 200, 0.15);
+      border-radius: 30px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 31, 63, 0.3);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    nav ul li a i {
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.1), 
+        transparent);
+      transition: all 0.6s ease;
+      z-index: -1;
+    }
+
+    nav ul li a:hover::before {
+      left: 100%;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+      opacity: 0;
+    }
+
+    nav ul li a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+      opacity: 1;
+    }
+
+    nav ul li a:hover {
+      color: #00ffc8;
+      border-color: rgba(0, 255, 200, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 255, 200, 0.3);
+      background: rgba(0, 31, 63, 0.6);
+      letter-spacing: 1px;
+    }
+
+    nav ul li a:hover i {
+      transform: scale(1.3);
+      color: #00ffc8;
+    }
+
+    /* Active item styling */
+    nav ul li a.active {
+      color: #00ffc8;
+      background: rgba(0, 31, 63, 0.6);
+      border-color: rgba(0, 255, 200, 0.4);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 255, 200, 0.2);
+    }
+
+    nav ul li a.active::after {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    .nav-indicator {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00ffc8;
+      box-shadow: 0 0 10px #00ffc8;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    nav ul li a:hover .nav-indicator {
+      opacity: 1;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    /* Keep all your existing styles below this line */
+    .page-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin: 120px auto 40px;
+      max-width: 1200px;
+      padding: 0 20px;
+    }
+
+    .team-card {
+      width: 300px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 0 20px #00ffc8;
+      padding: 25px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 380px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 255, 200, 0.5);
+    }
+
+    .team-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffc8;
+      margin-bottom: 20px;
+    }
+
+    .team-card p {
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .team-btn {
+      background: #00ffc8;
+      color: black;
+      padding: 12px 20px;
+      border: none;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .team-btn:hover {
+      background-color: #00c0a0;
+      transform: scale(1.05);
+    }
+
+    .container {
+      max-width: 600px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 0 20px #00ffc8;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      box-shadow: 0 10px 30px rgba(0, 255, 200, 0.5);
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffc8;
+      margin-bottom: 30px;
+    }
+
+    form input, form select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    form input:focus, form select:focus {
+      box-shadow: 0 0 8px #00ffc8;
+    }
+
+    button {
+      background: #00ffc8;
+      color: black;
+      padding: 12px 20px;
+      border: none;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00c0a0;
+      transform: scale(1.02);
+    }
+
+    .alert {
+      background: #ff4f4f;
+      padding: 10px 15px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .success {
+      background: #4fff73;
+    }
+
+    /* Nested Dropdown styles */
+    .events-container {
+      margin-bottom: 20px;
+    }
+
+    .events-dropdown {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: white;
+      color: black;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .events-dropdown:hover {
+      background-color: #f0f0f0;
+    }
+
+    .club-container {
+      display: none;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      margin-top: 5px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .club-btn {
+      width: 100%;
+      padding: 10px 15px;
+      text-align: left;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-bottom: 1px;
+      transition: all 0.2s ease;
+    }
+
+    .club-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .event-options {
+      display: none;
+      padding: 10px;
+      background-color: white;
+    }
+
+    .event-options label {
+      display: block;
+      padding: 8px 10px;
+      color: black;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .event-options label:hover {
+      background-color: #f0f0f0;
+    }
+
+    .event-options input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .active {
+      display: block;
+    }
+
+    /* Arrow indicators */
+    .arrow {
+      display: inline-block;
+      margin-left: 10px;
+      transition: transform 0.3s;
+    }
+
+    .rotated {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo-container">
+      <div class="logo-glow"></div>
+      <div class="logo-icon"><i class="fas fa-microchip"></i></div>
+      <div class="logo">TECHVOYM 2025</div>
+    </div>
+    <ul>
+      <li>
+        <a href="home.html">
+          <i class="fas fa-home"></i> Home
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="about.html">
+          <i class="fas fa-info-circle"></i> About
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="events.html">
+          <i class="fas fa-calendar-alt"></i> Events
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/db-login?type=individual">
+          <i class="fas fa-database"></i> Database
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="contact.html">
+          <i class="fas fa-envelope"></i> Contact
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Rest of your content remains unchanged -->
+  <div class="page-container">
+    <!-- Team Registration Card -->
+    <div class="team-card">
+      <div>
+        <h3>Register as a Team</h3>
+        <p>Already registered individually? Form a team with your friends for team events by registering with your PIDs.</p>
+      </div>
+      <a href="/team-register.html" class="team-btn">Register Team</a>
+    </div>
+
+    <!-- Individual Registration Form -->
+    <div class="container">
+      <h2>Register for TECHVOYM 2025</h2>
+
+      <div id="alertBox"></div>
+
+      <form action="/register" method="POST">
+
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="text" name="phoneno" placeholder="Phone Number" required />
+        <input type="email" name="emailid" placeholder="Email ID" required />
+        <input type="text" name="rollno" placeholder="Roll Number" required />
+        <input type="text" name="aadhaar" placeholder="Aadhaar Number" required />
+        <input type="text" name="college" placeholder="College Name" required />
+        <input type="text" name="course" placeholder="Course" required />
+        <select name="year" required>
+          <option value="">Select Year</option>
+          <option value="1st Year">1st Year</option>
+          <option value="2nd Year">2nd Year</option>
+          <option value="3rd Year">3rd Year</option>
+          <option value="4th Year">4th Year</option>
+          <option value="5th Year">5th Year</option>
+        </select>
+
+        <!-- Nested Dropdown for Events -->
+        <div class="events-container">
+          <button type="button" class="events-dropdown" id="eventsDropdown">
+            Events <span class="arrow">▼</span>
+          </button>
+          <div class="club-container" id="clubContainer">
+
+           <!-- Illuminati Club -->
+          <button type="button" class="club-btn" data-target="illuminatiEvents">
+            Illuminati Club <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="illuminatiEvents">
+            <label>
+              <input type="checkbox" name="events" value="Illuminati Club - Code Quest"> Code Quest
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Illuminati Club - Clone The Web"> Clone The Web
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Illuminati Club - Code Breakers"> Code Breakers
+            </label>
+          </div>
+          
+          <!-- Equinox Club -->
+          <button type="button" class="club-btn" data-target="equinoxEvents">
+            Equinox Club <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="equinoxEvents">
+            <label>
+              <input type="checkbox" name="events" value="Equinox Club - Code Relay"> Code Relay
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Equinox Club - Code Hunt"> Code Hunt
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Equinox Club - Big Bounty"> Big Bounty
+            </label>
+          </div>
+
+
+          <!-- Synergy Club -->
+          <button type="button" class="club-btn" data-target="synergyEvents">
+            Synergy Club <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="synergyEvents">
+            <label>
+              <input type="checkbox" name="events" value="Synergy Club - Junk Wars"> Junk Wars
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Synergy Club - Pirates of the Caribbean(Aqua Race)"> Pirates of the Caribbean(Aqua Race)
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Synergy Club - Drag and Place"> Drag and Place
+            </label>
+          </div>
+
+
+
+
+          <!-- Robotrax Club -->
+          <button type="button" class="club-btn" data-target="robotraxEvents">
+            Robotrax Club <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="robotraxEvents">
+            <label>
+              <input type="checkbox" name="events" value="Robotrax Club - Line Follower Robot(Wrong Turn)"> Line Follower Robot(Wrong Turn)
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Robotrax Club - Run Bhumi(Robowar)"> Run Bhumi(Robowar)
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Robotrax Club - Robo-Soccer(Wild Soccer)"> Robo-Soccer(Wild Soccer)
+            </label>
+          </div>
+
+
+
+
+
+          <!-- Aeronautics Club -->
+          <button type="button" class="club-btn" data-target="aeronauticsEvents">
+            Aeronautics Club <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="aeronauticsEvents">
+            <label>
+              <input type="checkbox" name="events" value="Aeronautics Club - Glider Plane"> Glider Plane
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Aeronautics Club - Bridge Building"> Bridge Building
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Aeronautics Club - Assemble Dissemble"> Assemble-Dissemble
+            </label>
+          </div>
+
+
+
+
+          <!-- Literary Club -->
+          <button type="button" class="club-btn" data-target="literaryEvents">
+            Literary Club <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="literaryEvents">
+            <label>
+              <input type="checkbox" name="events" value="Literary Club - Cryptic Hunt"> Cryptic Hunt
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Literary Club - Verses of the Valley"> Verses of the Valley
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Literary Club - Extempore"> Extempore
+            </label>
+          </div>
+
+
+
+
+          <!-- Pharmquimica Club -->
+          <button type="button" class="club-btn" data-target="pharmquimicaEvents">
+            Pharmquimica Club <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="pharmquimicaEvents">
+            <label>
+              <input type="checkbox" name="events" value="Pharmquimica Club - Aavishkarak"> Aavishkarak
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Pharmquimica Club - Pharma-Desk"> Pharma-Desk
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Pharmquimica Club - PharmaDraw"> PharmaDraw
+            </label>
+          </div>
+
+
+
+          <!-- Management Club -->
+          <button type="button" class="club-btn" data-target="managementEvents">
+            Management Club <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="managementEvents">
+            <label>
+              <input type="checkbox" name="events" value="Management Club - Ad Mad"> Ad Mad
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Management Club - Business Quiz"> Business Quiz
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Management Club - Business Plan"> Business Plan
+            </label>
+          </div>
+
+
+
+          <!-- Media Relation Club -->
+          <button type="button" class="club-btn" data-target="mediarelationEvents">
+            Media Relation Club <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="mediarelationEvents">
+            <label>
+              <input type="checkbox" name="events" value="Media Relation Club - Byte & Frame"> Byte & Frame
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Media Relation Club - Create Logo"> Create Logo
+            </label>
+
+          </div>
+
+
+
+
+          <!-- Open Events -->
+          <button type="button" class="club-btn" data-target="openEvents">
+            Open Events <span class="arrow">▼</span>
+          </button>
+          <div class="event-options" id="openEvents">
+            <label>
+              <input type="checkbox" name="events" value="Open Events - Tech Gallery"> Tech Gallery
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Open Events - Research Paper Event"> Research Paper Event
+            </label>
+            <label>
+              <input type="checkbox" name="events" value="Open Events - Lan War(BGMI)"> Lan War(BGMI)
+            </label>
+          </div>
+          
+          <!-- Add all your other clubs and events from your original file -->
+
+          </div>
+        </div>
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Your existing JavaScript for dropdown functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Events dropdown toggle
+      const eventsDropdown = document.getElementById('eventsDropdown');
+      const clubContainer = document.getElementById('clubContainer');
+      const clubButtons = document.querySelectorAll('.club-btn');
+      
+      // Add active class based on current page
+      const currentPage = window.location.pathname.split("/").pop();
+      const navLinks = document.querySelectorAll('nav ul li a');
+      navLinks.forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (linkHref === currentPage || 
+           (currentPage === '' && linkHref === 'home.html') || 
+           (currentPage === 'index.html' && linkHref === 'home.html')) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+      
+      eventsDropdown.addEventListener('click', function() {
+        clubContainer.classList.toggle('active');
+        this.querySelector('.arrow').classList.toggle('rotated');
+      });
+      
+      // Club buttons toggle
+      clubButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const targetElement = document.getElementById(targetId);
+          
+          // Toggle visibility
+          targetElement.classList.toggle('active');
+          
+          // Toggle arrow
+          this.querySelector('.arrow').classList.toggle('rotated');
+        });
+      });
+    });
+  </script>
+  <script>
+    // Check for status parameters in URL when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const status = urlParams.get('status');
+      
+      // Create alert div if needed
+      let alertDiv = document.querySelector('.alert');
+      if (!alertDiv) {
+        alertDiv = document.createElement('div');
+        alertDiv.className = 'alert';
+        const form = document.querySelector('form');
+        form.parentNode.insertBefore(alertDiv, form);
+      }
+      
+      // Show appropriate message based on status
+      if (status === 'exists') {
+        alertDiv.textContent = 'Registration failed! Email or Aadhaar number already exists.';
+        alertDiv.style.display = 'block';
+      } else if (status === 'error') {
+        alertDiv.textContent = 'An error occurred during registration. Please try again.';
+        alertDiv.style.display = 'block';
+      } else if (status === 'success') {
+        alertDiv.textContent = 'Registration successful!';
+        alertDiv.className = 'alert success';
+        alertDiv.style.display = 'block';
+      } else {
+        alertDiv.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
