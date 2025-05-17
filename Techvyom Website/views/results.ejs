@@ -1178,6 +1178,10 @@ function _openEditModal(id) {
     // Delete confirmation
     // Delete handler
 function _confirmDelete(id) {
+
+console.log('Deleting registration with ID:', id); // ✅ Add this
+
+
   if (!id) {
     showMessage('Invalid registration ID', false);
     return;
