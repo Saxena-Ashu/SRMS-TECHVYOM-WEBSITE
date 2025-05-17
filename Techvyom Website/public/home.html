@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI-Driven India - Techvyom 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #001f3f, #000);
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden; color: white;
+    }
+
+    .background-animation {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: radial-gradient(#001f3f, #000000);
+      z-index: -1; overflow: hidden;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 255, 200, 0.3);
+      animation: float 1s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.2); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    .preloader {
+      position: fixed;
+      inset: 0;
+      background-color: black;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .explode-text span {
+      display: inline-block;
+      font-size: 4rem;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffc8;
+      animation: explode 1s forwards;
+    }
+
+    .explode-text span:nth-child(n) {
+      animation-delay: calc(0.1s * var(--i));
+    }
+
+    @keyframes explode {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+    }
+
+    .welcome-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      color: #00ffc8;
+      opacity: 0;
+      animation: welcomeFade 1.5s ease forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes welcomeFade {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .ai-animation {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(#0f0f0f, #000000);
+      z-index: 9998;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      animation: fadeIn 1s forwards;
+      overflow: hidden;
+    }
+
+    .ai-animation::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: repeating-linear-gradient(
+        transparent 0px,
+        rgba(0, 255, 200, 0.05) 1px,
+        transparent 2px
+      );
+      transform: rotate(45deg);
+      animation: grid-animation 4s linear infinite;
+    }
+
+    @keyframes grid-animation {
+      0% { transform: rotate(45deg) translateY(0); }
+      100% { transform: rotate(45deg) translateY(1000px); }
+    }
+
+    .ai-animation::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent, #000000 70%);
+      pointer-events: none;
+    }
+
+    .ai-animation svg {
+      width: 200px; height: 200px;
+      stroke: #00ffc8;
+      fill: none; stroke-width: 2;
+      animation: pulse 0.6s infinite ease-in-out;
+      position: relative;
+      z-index: 1;
+    }
+
+    .innovation-text {
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 80%;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 255, 200, 0.3);
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUpIn 1s forwards;
+      animation-delay: 0.5s;
+      transition: all 1s ease;
+    }
+
+    @keyframes fadeUpIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.6; }
+    }
+
+    .main-content {
+      opacity: 0;
+      display: none;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Enhanced Super-Stylish Navigation Bar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 15, 30, 0.6);
+      backdrop-filter: blur(12px);
+      padding: 15px 30px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 200, 0.3);
+      border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      overflow: hidden;
+    }
+
+    nav::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, 
+        rgba(0, 255, 200, 0.05) 0%, 
+        transparent 100%);
+      transition: all 0.5s ease;
+      pointer-events: none;
+    }
+
+    nav:hover::before {
+      top: 0;
+    }
+
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.5),
+        transparent);
+      transition: left 1.5s ease;
+    }
+
+    nav:hover::after {
+      left: 100%;
+    }
+
+    nav .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 255, 200, 0.4) 0%, transparent 70%);
+      filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    nav .logo-container:hover .logo-glow {
+      opacity: 1;
+    }
+
+    nav .logo-icon {
+      font-size: 2rem;
+      color: #00ffc8;
+      animation: pulse 2s infinite ease-in-out;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 31, 63, 0.6);
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    nav .logo-container:hover .logo-icon {
+      transform: rotate(360deg);
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);
+    }
+
+    nav .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+      position: relative;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    nav .logo-container:hover .logo {
+      letter-spacing: 3px;
+      text-shadow: 0 0 15px rgba(0, 255, 200, 0.8);
+    }
+
+    nav .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transition: width 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      border-radius: 2px;
+    }
+
+    nav .logo-container:hover .logo::after {
+      width: 100%;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: #c0f0ff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 12px 20px;
+      border: 1px solid rgba(0, 255, 200, 0.15);
+      border-radius: 30px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 31, 63, 0.3);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    nav ul li a i {
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.1), 
+        transparent);
+      transition: all 0.6s ease;
+      z-index: -1;
+    }
+
+    nav ul li a:hover::before {
+      left: 100%;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+      opacity: 0;
+    }
+
+    nav ul li a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+      opacity: 1;
+    }
+
+    nav ul li a:hover {
+      color: #00ffc8;
+      border-color: rgba(0, 255, 200, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 255, 200, 0.3);
+      background: rgba(0, 31, 63, 0.6);
+      letter-spacing: 1px;
+    }
+
+    nav ul li a:hover i {
+      transform: scale(1.3);
+      color: #00ffc8;
+    }
+
+    /* Active item styling */
+    nav ul li a.active {
+      color: #00ffc8;
+      background: rgba(0, 31, 63, 0.6);
+      border-color: rgba(0, 255, 200, 0.4);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 255, 200, 0.2);
+    }
+
+    nav ul li a.active::after {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    .nav-indicator {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00ffc8;
+      box-shadow: 0 0 10px #00ffc8;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    nav ul li a:hover .nav-indicator {
+      opacity: 1;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero .main-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 6rem;
+      color: #00ffc8;
+      text-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
+      position: relative;
+    }
+
+    .hero .main-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffc8, transparent);
+    }
+
+    .hero .sub-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 5rem;
+      color: #00ffc8;
+      margin-top: 10px;
+      text-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      color: #ccc;
+      margin-top: 20px;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .register-btn {
+      background: linear-gradient(135deg, #00ffc8, #00c8ff);
+      color: black;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 255, 200, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .register-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .register-btn:hover::before {
+      left: 100%;
+    }
+
+    .register-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 255, 200, 0.5);
+    }
+
+    .register-btn a {
+      color: black;
+      text-decoration: none;
+    }
+
+    #enterScreen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Video with hazed effect */
+    .video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #backgroundVideo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translateX(-50%) translateY(-50%);
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(0, 255, 200, 0.1) 1px, transparent 1px),
+                  linear-gradient(rgba(0, 255, 200, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 2;
+    }
+
+    .perspective-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      perspective: 500px;
+      z-index: 3;
+    }
+
+    .grid-plane {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200%;
+      height: 200%;
+      transform: translate(-50%, -50%) rotateX(60deg);
+      background-image: linear-gradient(90deg, rgba(0, 255, 200, 0.15) 1px, transparent 1px),
+                        linear-gradient(rgba(0, 255, 200, 0.15) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: grid-move 20s linear infinite;
+      z-index: 3;
+    }
+
+    @keyframes grid-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+
+    .dark-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 4;
+    }
+
+    .vignette-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9);
+      z-index: 5;
+    }
+
+    .glow-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(0, 255, 200, 0.05) 0%, transparent 70%);
+      z-index: 6;
+      animation: glow-pulse 8s infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.7; }
+    }
+
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, 
+        rgba(0, 255, 200, 0) 0%,
+        rgba(0, 255, 200, 0.03) 50%,
+        rgba(0, 255, 200, 0) 100%);
+      background-size: 100% 8px;
+      z-index: 7;
+    }
+
+    .glitch-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 8;
+    }
+
+    .glitch-line {
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background-color: rgba(0, 255, 200, 0.3);
+      z-index: 8;
+      opacity: 0;
+      animation: glitch-animation 4s linear infinite;
+    }
+
+    @keyframes glitch-animation {
+      0% { top: 100%; opacity: 0; }
+      10% { opacity: 1; }
+      20% { top: var(--pos); opacity: 0; }
+      100% { top: var(--pos); opacity: 0; }
+    }
+
+    .stars {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      box-shadow: 0 0 3px rgba(0, 255, 200, 0.8);
+      z-index: 9;
+    }
+
+    .enter-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .enter-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #00ffc8;
+      text-shadow: 0 0 20px rgba(0, 255, 200, 0.7);
+      position: relative;
+      display: inline-block;
+      animation: text-flicker 5s infinite;
+    }
+
+    @keyframes text-flicker {
+      0%, 100% { opacity: 1; }
+      3%, 8% { opacity: 0.8; }
+      5% { opacity: 0.9; }
+      10.5% { opacity: 1; }
+      20% { opacity: 0.9; }
+      50% { opacity: 1; }
+      99% { opacity: 0.8; }
+    }
+
+    .enter-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00ffc8, transparent);
+    }
+
+    .enter-btn {
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #00ffc8, #00c8ff);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 255, 200, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .enter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .enter-btn:hover::before {
+      left: 100%;
+    }
+
+    .enter-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 255, 200, 0.5);
+    }
+
+    .light-speed {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: black;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .light-tunnel {
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, #00ffc8 0%, transparent 70%), repeating-radial-gradient(circle, #00ffc8 0 2px, transparent 2px 10px);
+      animation: tunnelZoom 2.5s ease-out forwards;
+      transform: scale(0.5);
+      opacity: 0;
+    }
+
+    @keyframes tunnelZoom {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.5); opacity: 1; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+
+    .countdown {
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffc8;
+      font-size: 1.8rem;
+      margin-top: 30px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
+      border: 1px solid rgba(0, 255, 200, 0.2);
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+    }
+    .ticker-container {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 255, 200, 0.1);
+      border-top: 1px solid #00ffc8;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      overflow: hidden;
+      z-index: 10001;
+    }
+    
+    .ticker-text {
+      display: inline-block;
+      white-space: nowrap;
+      padding-left: 100%;
+      animation: ticker-scroll 25s linear infinite;
+    }
+    
+    @keyframes ticker-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    .circular-logo {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+      background: rgba(0, 31, 63, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .circular-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    
+    .animated-logo {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.5);
+      z-index: 10002;
+      animation: logoZoomFly 5.5s ease-out forwards;
+      animation-delay: 9.5s; /* Syncs with AI animation */
+    }
+    
+    @keyframes logoZoomFly {
+      0% {
+        bottom: -100px;
+        transform: translateX(-50%) scale(0.5);
+        opacity: 0;
+      }
+      30% {
+        bottom: 50%;
+        transform: translateX(-50%) scale(2);
+        opacity: 1;
+      }
+      60% {
+        bottom: 50%;
+        transform: translateX(-50%) scale(2);
+        opacity: 1;
+      }
+      100% {
+        bottom: auto;
+        top: 15px;
+        left: 30px;
+        transform: scale(1);
+      }
+    }    
+  </style>
+</head>
+<body>
+  <!-- Audio -->
+  <audio id="welcomeAudio" src="b.mp3" preload="auto"></audio>
+  <div class="ticker-container">
+    <div class="ticker-text">
+      📝 Registration opens on 24th April at 9:00 AM and closes on 25th April at 5:00 PM. 📅 Visit the registration desk at SRMS cet Campus on 24th April for Registration. We’re excited to see you at Techvyom 2025!
+    </div>
+  </div>  
+  <div id="enterScreen">
+    <div class="video-container">
+      <!-- Replace with your actual video file -->
+      <video id="backgroundVideo" autoplay loop muted playsinline>
+        <source src="a.mp4" type="video/mp4">
+      </video>
+      <div class="grid-overlay"></div>
+      <div class="perspective-grid">
+        <div class="grid-plane"></div>
+      </div>
+      <div class="dark-overlay"></div>
+      <div class="vignette-overlay"></div>
+      <div class="glow-overlay"></div>
+      <div class="scan-line"></div>
+      <div class="glitch-effect" id="glitchEffect"></div>
+      <div id="starsContainer"></div>
+    </div>
+    <div class="enter-content">
+      <h1 class="enter-title">Get Ready For TECHVYOM 2025</h1>
+      <button onclick="startExperience()" class="enter-btn">Enter</button>
+    </div>
+  </div>
+
+  <div class="background-animation" id="backgroundAnimation"></div>
+  <div class="preloader" id="preloader">
+    <div class="explode-text" id="explodeText">
+      <span style="--i:1">T</span><span style="--i:2">E</span><span style="--i:3">C</span><span style="--i:4">H</span><span style="--i:5">V</span><span style="--i:6">O</span><span style="--i:7">Y</span><span style="--i:8">M</span><span style="--i:9"> </span><span style="--i:10">2</span><span style="--i:11">5</span>
+    </div>
+    <div class="welcome-text">Welcome to Techvyom 2025</div>
+  </div>
+  <div class="light-speed" id="lightSpeedEffect">
+    <div class="light-tunnel"></div>
+  </div>
+  <div class="ai-animation" id="aiAnimation">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" />
+      <path d="M 30 50 Q 50 30, 70 50 Q 50 70, 30 50" />
+    </svg>
+    <p class="innovation-text">Fueling Innovation. Igniting Minds. It's Techvyom Time!...</p>
+  </div>
+  <div class="main-content">
+    <nav>
+      <div class="logo-container animated-logo">
+        <div class="logo-glow"></div>
+        <div class="logo-icon circular-logo">
+          <img src="logo.jpeg" alt="Techvyom Logo" />
+        </div>
+        <div class="logo">TECHVYOM 2025</div>
+      </div>
+      <ul>
+        <li>
+          <a href="home.html" class="active">
+            <i class="fas fa-home"></i> Home
+            <span class="nav-indicator"></span>
+          </a>
+        </li>
+        <li>
+          <a href="about.html">
+            <i class="fas fa-info-circle"></i> About
+            <span class="nav-indicator"></span>
+          </a>
+        </li>
+        <li>
+          <a href="events.html">
+            <i class="fas fa-calendar-alt"></i> Events
+            <span class="nav-indicator"></span>
+          </a>
+        </li>
+        <li>
+          <a href="contact.html">
+            <i class="fas fa-envelope"></i> Contact
+            <span class="nav-indicator"></span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <section class="hero">
+      <div class="main-title">IT'S TIME</div>
+      <div class="main-title">TECHVYOM</div>
+      <div class="sub-title">2025</div>
+      <p>AI-Driven India | Innovation | Inclusion | Impact</p>
+      <div class="countdown" id="countdown"></div>
+      <button class="register-btn"><a href="register.html">Register Now</a></button>
+    </section>
+  </div>
+
+  <script>
+    // Create stars effect
+    function createStars() {
+      const starsContainer = document.getElementById('starsContainer');
+      const numberOfStars = 100;
+      
+      for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'stars';
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.width = `${Math.random() * 2 + 1}px`;
+        star.style.height = star.style.width;
+        star.style.opacity = Math.random();
+        star.style.animationDelay = `${Math.random() * 10}s`;
+        starsContainer.appendChild(star);
+      }
+    }
+    
+    // Create glitch lines
+    function createGlitchLines() {
+      const glitchContainer = document.getElementById('glitchEffect');
+      const numberOfLines = 10;
+      
+      for (let i = 0; i < numberOfLines; i++) {
+        const line = document.createElement('div');
+        line.className = 'glitch-line';
+        line.style.setProperty('--pos', `${Math.random() * 100}%`);
+        line.style.animationDelay = `${Math.random() * 10}s`;
+        glitchContainer.appendChild(line);
+      }
+    }
+    
+    // Initialize effects
+    document.addEventListener('DOMContentLoaded', function() {
+      createStars();
+      createGlitchLines();
+      
+      // Make sure the video is playing
+      const video = document.getElementById('backgroundVideo');
+      video.play().catch(e => {
+        console.log('Auto-play was prevented:', e);
+        // Add play button if autoplay is prevented
+        const playButton = document.createElement('button');
+        playButton.textContent = 'Play Video';
+        playButton.style.cssText = `
+          position: absolute;
+          z-index: 11;
+          background: rgba(0, 255, 200, 0.3);
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          cursor: pointer;
+          border-radius: 5px;
+          font-family: 'Orbitron', sans-serif;
+        `;
+        playButton.addEventListener('click', () => {
+          video.play();
+          playButton.remove();
+        });
+        document.querySelector('.video-container').appendChild(playButton);
+      });
+      
+      // Add active class based on current page
+      const currentPage = window.location.pathname.split("/").pop();
+      const navLinks = document.querySelectorAll('nav ul li a');
+      navLinks.forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (linkHref === currentPage || 
+           (currentPage === '' && linkHref === 'home.html') || 
+           (currentPage === 'index.html' && linkHref === 'home.html')) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    });
+
+    function startExperience() {
+      document.getElementById("enterScreen").style.display = "none";
+      document.getElementById("welcomeAudio").play();
+      const chars = document.querySelectorAll('.explode-text span');
+      chars.forEach(char => {
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = 300;
+        const x = Math.cos(angle) * radius + 'px';
+        const y = Math.sin(angle) * radius + 'px';
+        char.style.setProperty('--x', x);
+        char.style.setProperty('--y', y);
+      });
+      for (let i = 0; i < 30; i++) {
+        const circle = document.createElement('div');
+        circle.classList.add('circle');
+        circle.style.width = circle.style.height = `${Math.random() * 40 + 10}px`;
+        circle.style.left = `${Math.random() * 100}vw`;
+        circle.style.top = `${Math.random() * 100}vh`;
+        circle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        document.getElementById('backgroundAnimation').appendChild(circle);
+      }
+      document.getElementById('preloader').style.display = 'none';
+      document.getElementById('lightSpeedEffect').style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('lightSpeedEffect').style.display = 'none';
+        document.getElementById('aiAnimation').style.display = 'flex';
+      }, 2500);
+      setTimeout(() => {
+        document.getElementById('aiAnimation').style.display = 'none';
+        const main = document.querySelector('.main-content');
+        main.style.display = 'block';
+        setTimeout(() => {
+          main.style.opacity = '1';
+        }, 100);
+      }, 9500);
+    }
+    setTimeout(() => {
+      const logo = document.querySelector('.animated-logo');
+      logo.classList.remove('animated-logo');
+      logo.style.position = '';
+      logo.style.top = '';
+      logo.style.left = '';
+      logo.style.transform = '';
+      logo.style.zIndex = '';
+    }, 12000); // sync with AI animation + rise animation
+
+    const countdown = document.getElementById('countdown');
+    const targetDate = new Date('2025-04-26T08:00:00').getTime();
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      countdown.innerHTML = `Countdown: ${days} Days : ${hours} Hours : ${minutes} Minutes : ${seconds} Second`;
+    }, 1000);
+  </script>
+</body>
+</html>

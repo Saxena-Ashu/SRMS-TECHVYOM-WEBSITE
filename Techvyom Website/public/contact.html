@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - TECHVYOM 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #001f3f, #000);
+      color: #fff;
+      padding-top: 90px;
+    }
+
+    /* Super-Stylish Navigation Bar (matching home.html) */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 15, 30, 0.6);
+      backdrop-filter: blur(12px);
+      padding: 15px 30px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 200, 0.3);
+      border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    nav::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, 
+        rgba(0, 255, 200, 0.05) 0%, 
+        transparent 100%);
+      transition: all 0.5s ease;
+      pointer-events: none;
+    }
+
+    nav:hover::before {
+      top: 0;
+    }
+
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.5),
+        transparent);
+      transition: left 1.5s ease;
+    }
+
+    nav:hover::after {
+      left: 100%;
+    }
+
+    nav .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 255, 200, 0.4) 0%, transparent 70%);
+      filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    nav .logo-container:hover .logo-glow {
+      opacity: 1;
+    }
+
+    nav .logo-icon {
+      font-size: 2rem;
+      color: #00ffc8;
+      animation: pulse 2s infinite ease-in-out;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 31, 63, 0.6);
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    nav .logo-container:hover .logo-icon {
+      transform: rotate(360deg);
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);
+    }
+
+    nav .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+      position: relative;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    nav .logo-container:hover .logo {
+      letter-spacing: 3px;
+      text-shadow: 0 0 15px rgba(0, 255, 200, 0.8);
+    }
+
+    nav .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transition: width 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      border-radius: 2px;
+    }
+
+    nav .logo-container:hover .logo::after {
+      width: 100%;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: #c0f0ff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 12px 20px;
+      border: 1px solid rgba(0, 255, 200, 0.15);
+      border-radius: 30px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 31, 63, 0.3);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    nav ul li a i {
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.1), 
+        transparent);
+      transition: all 0.6s ease;
+      z-index: -1;
+    }
+
+    nav ul li a:hover::before {
+      left: 100%;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+      opacity: 0;
+    }
+
+    nav ul li a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+      opacity: 1;
+    }
+
+    nav ul li a:hover {
+      color: #00ffc8;
+      border-color: rgba(0, 255, 200, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 255, 200, 0.3);
+      background: rgba(0, 31, 63, 0.6);
+      letter-spacing: 1px;
+    }
+
+    nav ul li a:hover i {
+      transform: scale(1.3);
+      color: #00ffc8;
+    }
+
+    /* Active item styling */
+    nav ul li a.active {
+      color: #00ffc8;
+      background: rgba(0, 31, 63, 0.6);
+      border-color: rgba(0, 255, 200, 0.4);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 255, 200, 0.2);
+    }
+
+    nav ul li a.active::after {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    .nav-indicator {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00ffc8;
+      box-shadow: 0 0 10px #00ffc8;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    nav ul li a:hover .nav-indicator {
+      opacity: 1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 120px auto 40px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 0 20px #00ffc8;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffc8;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      text-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffc8, transparent);
+    }
+
+    /* Contact cards */
+    .contact-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, rgba(0, 31, 63, 0.6), rgba(0, 15, 31, 0.8));
+      border-radius: 16px;
+      padding: 30px;
+      width: 300px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 255, 200, 0.3);
+      transition: all 0.3s ease;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 255, 200, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0, 255, 200, 0.1), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 200, 0.4);
+    }
+
+    .contact-card:hover::before {
+      opacity: 1;
+    }
+
+    .contact-card .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00ffc8, #00c8ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 2.2rem;
+      color: #001f3f;
+      box-shadow: 0 5px 15px rgba(0, 255, 200, 0.5);
+      position: relative;
+      z-index: 1;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-card h3 {
+      margin: 0 0 15px;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+
+    .contact-card p {
+      margin: 5px 0;
+      color: #c0f0ff;
+      font-weight: 300;
+    }
+
+    .contact-card .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0;
+      padding: 8px 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-card .contact-info:hover {
+      background: rgba(0, 255, 200, 0.1);
+      transform: scale(1.05);
+    }
+
+    .contact-card i {
+      color: #00ffc8;
+      width: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* Map and location */
+    .map-section {
+      background: linear-gradient(135deg, rgba(0, 31, 63, 0.7), rgba(0, 15, 31, 0.9));
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 60px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 200, 0.2);
+      text-align: center;
+      border: 1px solid rgba(0, 255, 200, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(0, 255, 200, 0.05), transparent 70%);
+      pointer-events: none;
+    }
+
+    .map-section h3 {
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      margin-top: 0;
+      font-size: 2rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+
+    .map-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffc8, transparent);
+    }
+
+    .map-container {
+      position: relative;
+      overflow: hidden;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      height: 0;
+      border-radius: 15px;
+      margin-top: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .map-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 15px;
+    }
+
+    .location-details {
+      margin: 30px auto;
+      padding: 25px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      max-width: 80%;
+      text-align: center;
+      border: 1px solid rgba(0, 255, 200, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .location-details p {
+      margin: 10px 0;
+      color: #c0f0ff;
+      line-height: 1.6;
+    }
+
+    .location-details strong {
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      margin-bottom: 60px;
+    }
+
+    .faq-section h3 {
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2rem;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .faq-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffc8, transparent);
+    }
+
+    .accordion {
+      background: linear-gradient(135deg, rgba(0, 31, 63, 0.6), rgba(0, 15, 31, 0.8));
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 255, 200, 0.1);
+      overflow: hidden;
+      border: 1px solid rgba(0, 255, 200, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .accordion:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 10px rgba(0, 255, 200, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .accordion-header {
+      padding: 18px 25px;
+      background: rgba(0, 31, 63, 0.8);
+      color: #00ffc8;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .accordion-header:hover {
+      background: rgba(0, 255, 200, 0.2);
+    }
+
+    .accordion-header i {
+      transition: all 0.3s ease;
+    }
+
+    .accordion-body {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+    }
+
+    .accordion-body-content {
+      padding: 5px 25px 25px;
+      color: #c0f0ff;
+      line-height: 1.6;
+    }
+
+    .accordion-header.active {
+      background: rgba(0, 255, 200, 0.2);
+    }
+
+    .accordion-header.active + .accordion-body {
+      max-height: 500px;
+      transition: all 0.5s cubic-bezier(0.9, 0, 0.8, 0.2);
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 60px 20px 40px;
+      border-top: 1px solid rgba(0, 255, 200, 0.3);
+      text-align: center;
+      box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(0, 255, 200, 0.03), transparent 70%);
+      pointer-events: none;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-title {
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffc8;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 15px;
+    }
+
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffc8, transparent);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .social-links a {
+      color: #c0f0ff;
+      font-size: 1.6rem;
+      transition: all 0.3s ease;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(0, 31, 63, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 255, 200, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-links a:hover {
+      color: #00ffc8;
+      transform: translateY(-5px);
+      background: rgba(0, 255, 200, 0.15);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 255, 200, 0.2);
+    }
+
+    .footer-address {
+      margin: 30px 0;
+      color: #c0f0ff;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    .footer-address strong {
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .footer-contact {
+      margin: 20px 0;
+      color: #c0f0ff;
+      font-size: 1.1rem;
+    }
+
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 255, 200, 0.1);
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      nav {
+        padding: 10px 15px;
+      }
+      
+      nav ul {
+        gap: 8px;
+      }
+      
+      nav ul li a {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+      }
+      
+      h2 {
+        font-size: 2rem;
+      }
+      
+      .location-details {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo-container">
+      <div class="logo-glow"></div>
+      <div class="logo-icon"><i class="fas fa-microchip"></i></div>
+      <div class="logo">TECHVYOM 2025</div>
+    </div>
+    <ul>
+      <li>
+        <a href="home.html">
+          <i class="fas fa-home"></i> Home
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="about.html">
+          <i class="fas fa-info-circle"></i> About
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="events.html">
+          <i class="fas fa-calendar-alt"></i> Events
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="register.html">
+          <i class="fas fa-user-plus"></i> Registration
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="contact.html" class="active">
+          <i class="fas fa-envelope"></i> Contact Us
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Contact Us</h2>
+    
+    <div class="contact-cards">
+      <!-- Contact Card 1 -->
+      <div class="contact-card">
+        <div class="avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <h3>Ashu Saxena</h3>
+        <div class="contact-info">
+          <i class="fas fa-phone"></i>
+          <p>8439364075</p>
+        </div>
+        <div class="contact-info">
+          <i class="fas fa-envelope"></i>
+          <p>ashusaxena1233@gmail.com</p>
+        </div>
+      </div>
+      
+      <!-- Contact Card 2 -->
+      <div class="contact-card">
+        <div class="avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <h3>Naimish Gupta</h3>
+        <div class="contact-info">
+          <i class="fas fa-phone"></i>
+          <p>7310620609</p>
+        </div>
+        <div class="contact-info">
+          <i class="fas fa-envelope"></i>
+          <p>naimishgupta007@gmail.com</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Map and Location Section -->
+    <div class="map-section">
+      <h3>Find Us</h3>
+      <div class="location-details">
+        <p><strong>SHRI RAM MURTI SMARAK COLLEGE OF ENGINEERING AND TECHNOLOGY</strong></p>
+        <p>Ram Murti Puram 13 KM Bareilly-Nainital Road, Bhojipura, Bareilly - 243202, U.P, India</p>
+      </div>
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.1977843150547!2d79.43532307533097!3d28.479904975674396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a021ce87b8f8ff%3A0xea47a3b1cc65dbdb!2sShri%20Ram%20Murti%20Smarak%20College%20of%20Engineering%20%26%20Technology!5e0!3m2!1sen!2sin!4v1684307935324!5m2!1sen!2sin" 
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h3>Frequently Asked Questions</h3>
+      
+      <div class="accordion">
+        <div class="accordion-header">
+          What is TECHVYOM 2025? <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-content">
+            TECHVYOM 2025 is an annual technical festival organized by SRMS College of Engineering and Technology. It features various technical competitions, workshops, and events across different clubs including Illuminati Club, Equinox Club, Synergy Club, Robotrax Club, Aeronautics Club, Literary Club, Pharmquimica Club, and more.
+          </div>
+        </div>
+      </div>
+      
+      <div class="accordion">
+        <div class="accordion-header">
+          How can I register for events? <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-content">
+            You can register through our website using the 'Registration' page for individual events or the 'Team Registration' page for team events. Fill out the required details and select the events you're interested in participating. You'll receive a unique Participant ID (PID) for individual registration or Team ID for team registrations.
+          </div>
+        </div>
+      </div>
+      
+      <div class="accordion">
+        <div class="accordion-header">
+          Is there a registration fee for the events? <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-content">
+            Registration fees vary by event. Some events may be free, while others might have a nominal fee. The fee details are mentioned in the description of each event on the Events page. Payment information will be provided after registration.
+          </div>
+        </div>
+      </div>
+      
+      <div class="accordion">
+        <div class="accordion-header">
+          Can I participate in multiple events? <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-content">
+            Yes, you can register for multiple events, but make sure to check the event schedule to avoid time conflicts. Select all the events you wish to participate in during the registration process. Our system allows you to manage your participation across various club events.
+          </div>
+        </div>
+      </div>
+      
+      <div class="accordion">
+        <div class="accordion-header">
+          How do I know if my registration is confirmed? <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-content">
+            After successful registration, you will receive a confirmation page with your unique Participant ID (PID) or Team ID, which you should save for future reference. You can also contact the organizers if you need to verify your registration status or make changes to your event selections.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <h3 class="footer-title">Follow Us</h3>
+      
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+      
+      <div class="footer-address">
+        <p><strong>SHRI RAM MURTI SMARAK COLLEGE OF ENGINEERING AND TECHNOLOGY</strong></p>
+        <p>Ram Murti Puram 13KM Nainital-Highway, Bareilly - 243202</p>
+      </div>
+      
+      <div class="footer-contact">
+        <p>Phone: 0581-252246, 2582249, 2582231-32</p>
+        <p>E-mail: techvyom.srmscet@gmail.com | Website: www.srms.ac.in</p>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 TECHVYOM. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Accordion functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const accordionHeaders = document.querySelectorAll('.accordion-header');
+      
+      // Add active class based on current page
+      const currentPage = window.location.pathname.split("/").pop();
+      const navLinks = document.querySelectorAll('nav ul li a');
+      navLinks.forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (linkHref === currentPage || 
+           (currentPage === '' && linkHref === 'home.html') || 
+           (currentPage === 'index.html' && linkHref === 'home.html')) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+      
+      accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+          this.classList.toggle('active');
+          
+          // Update icon
+          const icon = this.querySelector('i');
+          if (this.classList.contains('active')) {
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+          } else {
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
