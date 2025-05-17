@@ -1,7 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const { mongoose, initDatabase, Registration, Event, Team, TeamMember, TeamEvent } = require('./db');
+const db = require('./db');
+const mongoose = db.connection.constructor.base; // gets actual mongoose instance
+
+const {
+  initDatabase,
+  Registration,
+  Event,
+  Team,
+  TeamMember,
+  TeamEvent
+} = db;
+
 
 const app = express();
 const PORT = 3011;
