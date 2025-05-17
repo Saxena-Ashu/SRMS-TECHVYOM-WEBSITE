@@ -483,6 +483,7 @@ app.get('/api/student/:pid', async (req, res) => {
 /// API to delete a registration
 app.delete('/api/registration/:id', async (req, res) => {
   const id = req.params.id;
+  console.log('DELETE /api/registration/:id called with:', id); // ✅ Add here
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ 
@@ -495,6 +496,7 @@ app.delete('/api/registration/:id', async (req, res) => {
     const result = await Registration.findByIdAndDelete(id);
     
     if (!result) {
+      console.log('Invalid ObjectId format:', id); // ✅ Log invalid case
       return res.status(404).json({ 
         success: false,
         message: 'Registration not found' 
@@ -555,7 +557,10 @@ app.put('/api/registration/:id', async (req, res) => {
 // API to get a single registration
 // In server.js
 app.get('/api/registration/:id', async (req, res) => {
+  
+
   const id = req.params.id;
+  console.log('GET /api/registration/:id called with:', req.params.id);
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ 
@@ -564,7 +569,10 @@ app.get('/api/registration/:id', async (req, res) => {
   }
 
   try {
+    
+
     const registration = await Registration.findById(id);
+    console.log('Looking up registration by ID:', id);
     
     if (!registration) {
       return res.status(404).json({ 
