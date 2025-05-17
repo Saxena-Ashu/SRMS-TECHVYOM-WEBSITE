@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Print Event Lists - TECHVYOM 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #001f3f, #000);
+      color: #fff;
+      padding-top: 90px; /* Adjusted for larger nav */
+    }
+
+    /* Super-Stylish Navigation Bar (matching confirmation.ejs) */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 15, 30, 0.6);
+      backdrop-filter: blur(12px);
+      padding: 15px 30px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 200, 0.3);
+      border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    nav::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, 
+        rgba(0, 255, 200, 0.05) 0%, 
+        transparent 100%);
+      transition: all 0.5s ease;
+      pointer-events: none;
+    }
+
+    nav:hover::before {
+      top: 0;
+    }
+
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.5),
+        transparent);
+      transition: left 1.5s ease;
+    }
+
+    nav:hover::after {
+      left: 100%;
+    }
+
+    nav .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 255, 200, 0.4) 0%, transparent 70%);
+      filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    nav .logo-container:hover .logo-glow {
+      opacity: 1;
+    }
+
+    nav .logo-icon {
+      font-size: 2rem;
+      color: #00ffc8;
+      animation: pulse 2s infinite ease-in-out;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 31, 63, 0.6);
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    nav .logo-container:hover .logo-icon {
+      transform: rotate(360deg);
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);
+    }
+
+    nav .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+      position: relative;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    nav .logo-container:hover .logo {
+      letter-spacing: 3px;
+      text-shadow: 0 0 15px rgba(0, 255, 200, 0.8);
+    }
+
+    nav .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transition: width 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      border-radius: 2px;
+    }
+
+    nav .logo-container:hover .logo::after {
+      width: 100%;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: #c0f0ff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 12px 20px;
+      border: 1px solid rgba(0, 255, 200, 0.15);
+      border-radius: 30px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 31, 63, 0.3);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    nav ul li a i {
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.1), 
+        transparent);
+      transition: all 0.6s ease;
+      z-index: -1;
+    }
+
+    nav ul li a:hover::before {
+      left: 100%;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+      opacity: 0;
+    }
+
+    nav ul li a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+      opacity: 1;
+    }
+
+    nav ul li a:hover {
+      color: #00ffc8;
+      border-color: rgba(0, 255, 200, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 255, 200, 0.3);
+      background: rgba(0, 31, 63, 0.6);
+      letter-spacing: 1px;
+    }
+
+    nav ul li a:hover i {
+      transform: scale(1.3);
+      color: #00ffc8;
+    }
+
+    /* Active item styling */
+    nav ul li a.active {
+      color: #00ffc8;
+      background: rgba(0, 31, 63, 0.6);
+      border-color: rgba(0, 255, 200, 0.4);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 255, 200, 0.2);
+    }
+
+    nav ul li a.active::after {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    .nav-indicator {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00ffc8;
+      box-shadow: 0 0 10px #00ffc8;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    nav ul li a:hover .nav-indicator {
+      opacity: 1;
+    }
+
+    
+
+    .database-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      background-color: rgba(0, 31, 63, 0.5);
+      color: #c0f0ff;
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+    }
+
+    .tab-btn.active {
+      background-color: rgba(0, 255, 200, 0.2);
+      color: #00ffc8;
+      border-color: #00ffc8;
+      box-shadow: 0 5px 15px rgba(0, 255, 200, 0.2);
+    }
+
+    .tab-btn:hover {
+      background-color: rgba(0, 255, 200, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 120px auto 40px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 0 20px #00ffc8;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffc8;
+      margin-bottom: 30px;
+    }
+    
+    h3 {
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.3);
+      padding-bottom: 5px;
+    }
+
+    .event-selection {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .club-section {
+      flex: 1 1 300px;
+      background: rgba(0, 31, 63, 0.3);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0, 255, 200, 0.2);
+    }
+
+    .club-section h3 {
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.3);
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+
+    .event-option {
+      margin-bottom: 10px;
+    }
+
+    .event-option label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .event-option label:hover {
+      background-color: rgba(0, 255, 200, 0.1);
+    }
+
+    .event-option input[type="checkbox"] {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    .print-btn {
+      background: #00ffc8;
+      color: black;
+      padding: 12px 30px;
+      border: none;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .print-btn:hover {
+      background-color: #00c0a0;
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 255, 200, 0.3);
+    }
+
+    .back-btn {
+      background: #3f7fff;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background-color: #2060ff;
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(63, 127, 255, 0.3);
+    }
+
+    .segment-title {
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffc8;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    
+    /* Result tables styling */
+    .results-container {
+      margin-top: 30px;
+    }
+    
+    .result-table-container {
+      margin-bottom: 30px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.3);
+    }
+    
+    .table-header {
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .individual-header {
+      background-color: #28a745;
+    }
+    
+    .team-header {
+      background-color: #007bff;
+    }
+    
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(0, 31, 63, 0.3);
+    }
+    
+    .result-table th {
+      background-color: rgba(0, 31, 63, 0.7);
+      color: #00ffc8;
+      padding: 12px;
+      text-align: left;
+      font-weight: bold;
+      border-bottom: 2px solid rgba(0, 255, 200, 0.3);
+    }
+    
+    .result-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.1);
+      color: #fff;
+    }
+    
+    .result-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .result-table tr:hover td {
+      background-color: rgba(0, 255, 200, 0.05);
+    }
+    
+    .member-item {
+      margin-bottom: 5px;
+    }
+
+    /* Print specific styles */
+    @media print {
+      body {
+        background: white;
+        color: black;
+        padding-top: 0;
+      }
+
+      nav, .database-tabs, .action-buttons, .event-selection {
+        display: none;
+      }
+
+      .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 20px;
+        background: white;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      h2, h3 {
+        color: black;
+        text-shadow: none;
+      }
+      
+      .result-table-container {
+        box-shadow: none;
+        margin-bottom: 20px;
+      }
+      
+      .result-table th {
+        background-color: #f0f0f0;
+        color: black;
+      }
+      
+      .result-table td {
+        color: black;
+      }
+      
+      .table-header {
+        border: 1px solid #ccc;
+      }
+      
+      .table-header.individual-header {
+        background-color: #a8d7b9;
+        color: black;
+      }
+      
+      .table-header.team-header {
+        background-color: #a8c1d7;
+        color: black;
+      }
+      
+      .result-table {
+        border: 1px solid #ccc;
+      }
+      
+      /* Show the print section during printing */
+      .print-section {
+        display: block !important;
+      }
+    }
+    
+    /* Hide print section when not printing */
+    .print-section {
+      display: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+
+    /* Add this to the style section */
+    .club-section h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .club-checkbox {
+      margin: 0;
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+    }
+
+    .all-clubs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  width: 100%;
+  position: relative;
+}
+
+.all-clubs-option {
+  padding: 10px 15px;
+  background: rgba(0, 31, 63, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  box-shadow: 0 0 10px rgba(0, 255, 200, 0.1);
+  text-align: center;
+}
+
+.all-clubs-option label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #c0f0ff;
+  white-space: nowrap;
+}
+
+.all-clubs-option input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.excel-btn {
+      background: #28a745;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 20px;
+    }
+
+    .excel-btn:hover {
+      background-color: #218838;
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo-container">
+      <div class="logo-glow"></div>
+      <div class="logo-icon"><i class="fas fa-microchip"></i></div>
+      <div class="logo">TECHVYOM 2025</div>
+    </div>
+    <ul>
+      <li>
+        <a href="home.html">
+          <i class="fas fa-home"></i> Home
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="about.html">
+          <i class="fas fa-info-circle"></i> About
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="events.html">
+          <i class="fas fa-calendar-alt"></i> Events
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="register.html">
+          <i class="fas fa-user-plus"></i> Registration
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="contact.html">
+          <i class="fas fa-envelope"></i> Contact
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <% const isTeamType = (type === 'team' || type === 'team_event'); %>
+
+    <h2>Print <%= (type.includes('team')) ? 'Team' : 'Individual' %> Event Lists</h2>
+
+
+    <div class="database-tabs">
+      <a href="/results" class="tab-btn <%= !isTeamType ? 'active' : '' %>"><i class="fas fa-user"></i> Individual Registrations</a>
+      <a href="/team-results" class="tab-btn <%= isTeamType ? 'active' : '' %>"><i class="fas fa-users"></i> Team Registrations</a>
+      <a href="/print-lists?type=<%= type %>" class="tab-btn active"><i class="fas fa-print"></i> Print Event Lists</a>
+    </div>
+
+    <h3 class="segment-title">Select Events to Print</h3>
+    <div class="all-clubs-option">
+      <label>
+        <input type="checkbox" id="all-clubs-checkbox"> 
+        <span>Select All Clubs</span>
+      </label>
+    </div>
+
+    <div class="event-selection">
+      <!-- Illuminati Club -->
+      <div class="club-section">
+        <h3>
+          Illuminati Club
+          <input type="checkbox" class="club-checkbox" value="Illuminati Club">
+          
+        </h3>
+        
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Illuminati Club - Code Quest"> Code Quest
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Illuminati Club - Clone The Web"> Clone The Web
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Illuminati Club - Code Breakers"> Code Breakers
+          </label>
+        </div>
+      </div>
+
+      <!-- Equinox Club -->
+      <div class="club-section">
+        <h3>
+          Equinox Club
+          <input type="checkbox" class="club-checkbox" value="Equinox Club">
+          
+        </h3>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Equinox Club - Code Relay"> Code Relay
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Equinox Club - Code Hunt"> Code Hunt
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Equinox Club - Big Bounty"> Big Bounty
+          </label>
+        </div>
+      </div>
+
+      <!-- Synergy Club -->
+      <div class="club-section">
+        <h3>
+          Synergy Club
+          <input type="checkbox" class="club-checkbox" value="Synergy Club">
+          
+        </h3>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Synergy Club - Junk Wars"> Junk Wars
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Synergy Club - Pirates of the Caribbean(Aqua Race)"> Pirates of the Caribbean(Aqua Race)
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Synergy Club - Drag and Place"> Drag and Place
+          </label>
+        </div>
+      </div>
+
+      <!-- Robotrax Club -->
+      <div class="club-section">
+        <h3>
+          Robotrax Club
+          <input type="checkbox" class="club-checkbox" value="Robotrax Club">
+          
+        </h3>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Robotrax Club - Line Follower Robot(Wrong Turn)"> Line Follower Robot(Wrong Turn)
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Robotrax Club - Run Bhumi(Robowar)"> Run Bhumi(Robowar)
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Robotrax Club - Robo-Soccer(Wild Soccer)"> Robo-Soccer(Wild Soccer)
+          </label>
+        </div>
+      </div>
+
+      <!-- Aeronautics Club -->
+      <div class="club-section">
+        <h3>
+          Aeronautics Club
+          <input type="checkbox" class="club-checkbox" value="Aeronautics Club">
+          
+        </h3>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Aeronautics Club - Catapult"> Catapult
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Aeronautics Club - Bridge Building"> Bridge Building
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Aeronautics Club - Assemble Dissemble"> Assemble Dissemble
+          </label>
+        </div>
+      </div>
+
+      <!-- Literary Club -->
+      <div class="club-section">
+        <h3>
+          Literary Club
+          <input type="checkbox" class="club-checkbox" value="Literary Club">
+          
+        </h3>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Literary Club - Cryptic Hunt"> Cryptic Hunt
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Literary Club - Verses of the Valley"> Verses of the Valley
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Literary Club - Extempore"> Extempore
+          </label>
+        </div>
+      </div>       <!-- Pharmquimica Club -->
+      <div class="club-section">
+        <h3>
+          Pharmquimica Club
+          <input type="checkbox" class="club-checkbox" value="Pharmquimica Club">
+        </h3>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Pharmquimica Club - Aavishkarak"> Aavishkarak
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Pharmquimica Club - Pharma-Desk"> Pharma-Desk
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Pharmquimica Club - PharmaDraw"> PharmaDraw
+          </label>
+        </div>
+      </div>
+
+      <!-- Management Club -->
+      <div class="club-section">
+        <h3>
+          Management Club
+          <input type="checkbox" class="club-checkbox" value="Management Club">
+        </h3>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Management Club - Ad Mad"> Ad Mad
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Management Club - Business Quiz"> Business Quiz
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Management Club - Business Plan"> Business Plan
+          </label>
+        </div>
+      </div>
+
+      <!-- Media Relation Club -->
+      <div class="club-section">
+        <h3>
+          Media Relation Club
+          <input type="checkbox" class="club-checkbox" value="Media Relation Club">
+        </h3>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Media Relation Club - Byte & Frame"> Byte & Frame
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Media Relation Club - Create Logo"> Create Logo
+          </label>
+        </div>
+      </div>
+
+      <!-- Open Events -->
+      <div class="club-section">
+        <h3>
+          Open Events
+          <input type="checkbox" class="club-checkbox" value="Open Events">
+        </h3>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Open Events - Tech Gallery"> Tech Gallery
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Open Events - Research Paper Event"> Research Paper Event
+          </label>
+        </div>
+        <div class="event-option">
+          <label>
+            <input type="checkbox" class="event-checkbox" value="Open Events - Lan War(BGMI)"> Lan War(BGMI)
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button id="generateListsBtn" class="print-btn"><i class="fas fa-list"></i> Generate Lists</button>
+      <a href="/<%= isTeamType ? 'team-results' : 'results' %>" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Database</a>
+    </div>
+
+    <div id="results-container" class="results-container">
+      <!-- Generated lists will appear here -->
+    </div>
+
+    <!-- Print-specific content that only shows when printing -->
+    <div class="print-section">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="font-family: 'Orbitron', sans-serif;">TECHVYOM 2025</h1>
+        <h2><%= isTeamType ? 'Team' : 'Individual' %> Event Registration Lists</h2>
+        <p>Generated on: <span id="print-date"></span></p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      // Set print date
+      const urlParams = new URLSearchParams(window.location.search);
+    const urlType = urlParams.get('type') || '';
+    const isTeamType = ['team', 'team_event'].includes(urlType);
+    
+    console.log("URL Type:", urlType, "isTeamType:", isTeamType);
+      document.getElementById('print-date').textContent = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      // Get all relevant checkboxes
+      const allClubsCheckbox = document.getElementById('all-clubs-checkbox');
+      const clubCheckboxes = document.querySelectorAll('.club-checkbox');
+      const eventCheckboxes = document.querySelectorAll('.event-checkbox');
+
+      // Handle "All Clubs" checkbox change
+      allClubsCheckbox.addEventListener('change', function() {
+        const isChecked = this.checked;
+        
+        // Check/uncheck all club checkboxes
+        clubCheckboxes.forEach(checkbox => {
+          checkbox.checked = isChecked;
+          checkbox.indeterminate = false;
+        });
+        
+        // Check/uncheck all event checkboxes
+        eventCheckboxes.forEach(checkbox => {
+          checkbox.checked = isChecked;
+        });
+      });
+
+      // Handle individual club checkbox changes
+      clubCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const clubSection = this.closest('.club-section');
+          const clubEvents = clubSection.querySelectorAll('.event-checkbox');
+          
+          // Check/uncheck all events in this club
+          clubEvents.forEach(eventCheckbox => {
+            eventCheckbox.checked = this.checked;
+          });
+          
+          // Update "All Clubs" checkbox state
+          updateAllClubsCheckbox();
+        });
+      });
+
+      // Handle individual event checkbox changes
+      eventCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const clubSection = this.closest('.club-section');
+          const clubCheckbox = clubSection.querySelector('.club-checkbox');
+          const clubEvents = clubSection.querySelectorAll('.event-checkbox');
+          
+          // Update club checkbox state based on its events
+          const allChecked = Array.from(clubEvents).every(c => c.checked);
+          const anyChecked = Array.from(clubEvents).some(c => c.checked);
+          
+          clubCheckbox.checked = allChecked;
+          clubCheckbox.indeterminate = anyChecked && !allChecked;
+          
+          // Update "All Clubs" checkbox state
+          updateAllClubsCheckbox();
+        });
+      });
+
+      // Helper function to update "All Clubs" checkbox state
+      function updateAllClubsCheckbox() {
+        const allClubsChecked = Array.from(clubCheckboxes).every(c => c.checked && !c.indeterminate);
+        const anyClubChecked = Array.from(clubCheckboxes).some(c => c.checked || c.indeterminate);
+        
+        allClubsCheckbox.checked = allClubsChecked;
+        allClubsCheckbox.indeterminate = anyClubChecked && !allClubsChecked;
+      }
+
+      // Generate lists button
+      document.getElementById('generateListsBtn').addEventListener('click', function() {
+        const selectedEvents = [];
+        document.querySelectorAll('.event-checkbox:checked').forEach(checkbox => {
+          selectedEvents.push(checkbox.value);
+        });
+        
+        if (selectedEvents.length === 0) {
+          alert('Please select at least one event to generate lists.');
+          return;
+        }
+        
+        // Create URL with selected events
+        const eventsParam = selectedEvents.map(e => encodeURIComponent(e)).join('&event=');
+        const type = '<%= type %>';
+        console.log("TYPE:", type);  // ✅ Add this
+
+        
+
+
+        
+        // Fetch data
+        fetch(`/api/event-lists?type=${isTeamType ? 'team_event' : 'individual'}&event=${eventsParam}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Fetched data:', data); // ✅ Move this INSIDE here
+    generateEventTables(data, selectedEvents);
+  })
+
+          .catch(error => {
+            console.error('Error fetching event data:', error);
+            alert('Error generating lists. Please try again.');
+          });
+      });
+      console.log('Fetched data:', data);
+      
+      function generateEventTables(data, selectedEvents) {
+        const resultsContainer = document.getElementById('results-container');
+        resultsContainer.innerHTML = '';
+        
+        
+        console.log("Generating tables for type:", isTeamType ? "TEAM" : "INDIVIDUAL");
+console.log("Sample Data:", data[selectedEvents[0]]);
+
+        // Add title headers for PDF printing
+        const titleContainer = document.createElement('div');
+        titleContainer.className = 'print-title';
+        titleContainer.innerHTML = `
+          <h1 class="main-title">TECHVYOM 2025</h1>
+          <h2 class="sub-title">Students List</h2>
+        `;
+        resultsContainer.appendChild(titleContainer);
+        
+        selectedEvents.forEach(eventName => {
+          const eventData = data[eventName] || [];
+          
+          // Create table container
+          const tableContainer = document.createElement('div');
+          tableContainer.className = 'result-table-container';
+          
+          // Create header
+          const tableHeader = document.createElement('div');
+          tableHeader.className = `table-header ${isTeamType ? 'team-header' : 'individual-header'}`;
+          tableHeader.textContent = eventName;
+          tableContainer.appendChild(tableHeader);
+          
+          // Create table
+          const table = document.createElement('table');
+          table.className = 'result-table';
+          
+          // Create table header
+          const thead = document.createElement('thead');
+          const headerRow = document.createElement('tr');
+          
+          // Add S.No. column first
+          const serialHeader = document.createElement('th');
+          serialHeader.textContent = 'S.No.';
+          headerRow.appendChild(serialHeader);
+          
+          if (isTeamType) {
+            // Team header columns
+            ['Team Name', 'Team ID', 'College', 'Members'].forEach(columnName => {
+              const th = document.createElement('th');
+              th.textContent = columnName;
+              headerRow.appendChild(th);
+            });
+          } else {
+            // Individual header columns
+            ['PID', 'Name', 'College', 'Phone Number'].forEach(columnName => {
+              const th = document.createElement('th');
+              th.textContent = columnName;
+              headerRow.appendChild(th);
+            });
+          }
+          
+          thead.appendChild(headerRow);
+          table.appendChild(thead);
+          
+          // Create table body
+          const tbody = document.createElement('tbody');
+          
+          if (eventData.length === 0) {
+            const noDataRow = document.createElement('tr');
+            const noDataCell = document.createElement('td');
+            noDataCell.colSpan = isTeamType ? 5 : 5; // Updated colspan to account for S.No.
+            noDataCell.textContent = 'No registrations for this event.';
+            noDataCell.style.textAlign = 'center';
+            noDataCell.style.padding = '20px';
+            noDataRow.appendChild(noDataCell);
+            tbody.appendChild(noDataRow);
+          } else {
+            // Add data rows
+            eventData.forEach((item, index) => {
+              const row = document.createElement('tr');
+              
+              // Add serial number cell
+              const serialCell = document.createElement('td');
+              serialCell.textContent = index + 1;
+              row.appendChild(serialCell);
+              
+              if (isTeamType) {
+                // Team data
+                const teamNameCell = document.createElement('td');
+                teamNameCell.textContent = item.team_name;
+                row.appendChild(teamNameCell);
+                
+                const teamIdCell = document.createElement('td');
+                teamIdCell.textContent = item.team_id;
+                row.appendChild(teamIdCell);
+                
+                // Add college cell
+                const collegeCell = document.createElement('td');
+                // Assuming the college is the same for all team members
+                const college = item.members && item.members.length > 0 ? item.members[0].college : '';
+                collegeCell.textContent = item.college;
+                row.appendChild(collegeCell);
+                
+                const membersCell = document.createElement('td');
+                if (item.members && item.members.length > 0) {
+                  item.members.forEach(member => {
+                    const memberDiv = document.createElement('div');
+                    memberDiv.className = 'member-item';
+                    memberDiv.textContent = `${member.name} (${member.pid})`;
+                    membersCell.appendChild(memberDiv);
+                  });
+                } else {
+                  membersCell.textContent = 'No members';
+                }
+                row.appendChild(membersCell);
+              } else {
+                // Individual data
+                const pidCell = document.createElement('td');
+                pidCell.textContent = item.pid;
+                row.appendChild(pidCell);
+                
+                const nameCell = document.createElement('td');
+                nameCell.textContent = item.name;
+                row.appendChild(nameCell);
+                
+                const collegeCell = document.createElement('td');
+                collegeCell.textContent = item.college;
+                row.appendChild(collegeCell);
+                
+                const phoneCell = document.createElement('td');
+                phoneCell.textContent = item.phoneno;
+                row.appendChild(phoneCell);
+              }
+              
+              tbody.appendChild(row);
+            });
+          }
+          
+          table.appendChild(tbody);
+          tableContainer.appendChild(table);
+          resultsContainer.appendChild(tableContainer);
+        });
+        
+        // Store data for export
+        window.exportData = {
+          data: data,
+          events: selectedEvents,
+          isTeamType: isTeamType
+        };
+        
+        // Show export buttons if there are results
+        if (selectedEvents.length > 0) {
+          const actionButtons = document.createElement('div');
+          actionButtons.className = 'action-buttons';
+          actionButtons.innerHTML = `
+            <button id="exportExcelBtn" class="print-btn">
+              <i class="fas fa-file-excel"></i> Export to Excel
+            </button>
+            <button id="printPdfBtn" class="print-btn">
+              <i class="fas fa-file-pdf"></i> Print as PDF
+            </button>
+          `;
+          resultsContainer.appendChild(actionButtons);
+          
+          // Add event listeners to buttons
+          document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+          document.getElementById('printPdfBtn').addEventListener('click', printAsPDF);
+        }
+        
+        // Add styles for the title elements
+        const style = document.createElement('style');
+        style.textContent = `
+          .print-title {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+          .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+          }
+          .sub-title {
+            font-size: 18px;
+            margin-top: 0;
+          }
+          @media print {
+            .print-title {
+              margin-bottom: 20px;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      // Function to export to Excel with professional styling (HTML table)
+      function exportToExcel() {
+        // Check if export data is available
+        if (!window.exportData) {
+          alert('No data available for export.');
+          return;
+        }
+        
+        const { data, events, isTeamType } = window.exportData;
+        
+        try {
+          // Create a HTML table that can be copied to Excel
+          const excelHTML = document.createElement('div');
+          excelHTML.style.display = 'none';
+          document.body.appendChild(excelHTML);
+          
+          // Add title and styling
+          let html = `
+            <html>
+            <head>
+              <meta charset="UTF-8">
+              <style>
+                body { font-family: Arial, sans-serif; }
+                .title { 
+                  font-size: 24pt; 
+                  font-weight: bold; 
+                  text-align: center; 
+                  color: #003366;
+                  background-color: #f0f0f0;
+                  padding: 10px;
+                  border-bottom: 2px solid #003366;
+                }
+                .subtitle { 
+                  font-size: 16pt; 
+                  text-align: center; 
+                  color: #003366;
+                  margin-bottom: 20px;
+                }
+                .event-title {
+                  font-size: 14pt;
+                  font-weight: bold;
+                  background-color: #4472C4;
+                  color: white;
+                  padding: 5px 10px;
+                  margin-top: 20px;
+                }
+                table {
+                  border-collapse: collapse;
+                  width: 100%;
+                  margin-top: 5px;
+                  margin-bottom: 20px;
+                }
+                th {
+                  background-color: #5B9BD5;
+                  color: white;
+                  font-weight: bold;
+                  text-align: center;
+                  border: 1px solid #DDDDDD;
+                  padding: 8px;
+                }
+                td {
+                  border: 1px solid #DDDDDD;
+                  padding: 8px;
+                  text-align: left;
+                }
+                tr:nth-child(even) {
+                  background-color: #f2f2f2;
+                }
+                .serial-col {
+                  width: 50px;
+                  text-align: center;
+                }
+                .spacer {
+                  height: 20px;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="title">TECHVYOM 2025</div>
+              <div class="subtitle">Students List</div>
+          `;
+          
+          // Process each event
+          events.forEach(eventName => {
+            const eventData = data[eventName] || [];
+            console.log("Raw event data for:", eventName, eventData);
+            
+            // Skip if no data
+            if (eventData.length === 0) return;
+            
+            // Add event name as header
+            html += `<div class="event-title">${eventName}</div>`;
+            
+            // Start table
+            html += '<table border="1">';
+            
+            // Add header row
+            const headers = isTeamType ? 
+              ['S.No.', 'Team Name', 'Team ID', 'College', 'Members'] : 
+              ['S.No.', 'PID', 'Name', 'College', 'Phone Number'];
+            
+            html += '<tr>';
+            headers.forEach((header, index) => {
+              const className = index === 0 ? 'class="serial-col"' : '';
+              html += `<th ${className}>${header}</th>`;
+            });
+            html += '</tr>';
+            
+            // Add data rows
+            eventData.forEach((item, index) => {
+              html += '<tr>';
+              
+              // Add serial number
+              html += `<td class="serial-col">${index + 1}</td>`;
+              
+              if (isTeamType) {
+                // Team data
+                html += `<td>${item.team_name || ''}</td>`;
+                html += `<td>${item.team_id || ''}</td>`;
+                
+                // Add college
+                const college = item.members && item.members.length > 0 ? item.members[0].college : '';
+                html += `<td>${college || ''}</td>`;
+                
+                // Format members
+                let membersText = '';
+                if (item.members && item.members.length > 0) {
+                  membersText = item.members.map(m => `${m.name} (${m.pid})`).join('; ');
+                } else {
+                  membersText = 'No members';
+                }
+                html += `<td>${membersText}</td>`;
+              } else {
+                // Individual data
+                html += `<td>${item.pid || ''}</td>`;
+                html += `<td>${item.name || ''}</td>`;
+                html += `<td>${item.college || ''}</td>`;
+                html += `<td>${item.phoneno || ''}</td>`;
+              }
+              
+              html += '</tr>';
+            });
+            
+            // End table
+            html += '</table>';
+            html += '<div class="spacer"></div>';
+          });
+          
+          // Close HTML
+          html += '</body></html>';
+          
+          // Set HTML
+          excelHTML.innerHTML = html;
+          
+          // Create a Blob with HTML content
+          const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+          const url = URL.createObjectURL(blob);
+          
+          // Create a link and trigger download
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'TECHVYOM_2025_Students_List.xls';
+          link.click();
+          
+          // Clean up
+          setTimeout(() => {
+            URL.revokeObjectURL(url);
+            document.body.removeChild(excelHTML);
+          }, 100);
+          
+        } catch (error) {
+          console.error('Error exporting to Excel:', error);
+          alert('Error creating Excel file. Falling back to CSV export.');
+          exportToCSV();
+        }
+      }
+      
+      // Fallback function to export tables to CSV
+      function exportToCSV() {
+        // Check if export data is available
+        if (!window.exportData) {
+          alert('No data available for export.');
+          return;
+        }
+        
+        const { data, events, isTeamType } = window.exportData;
+        
+        try {
+          // Start with the titles
+          let csvContent = 'TECHVYOM 2025\n';
+          csvContent += 'Students List\n\n';
+          
+          // Function to escape CSV values
+          function escapeCSV(text) {
+            if (text == null) return '';
+            text = String(text);
+            // If the text contains commas, quotes, or newlines, wrap it in quotes
+            if (text.includes(',') || text.includes('"') || text.includes('\n')) {
+              // Replace any quotes with double quotes to escape them
+              text = text.replace(/"/g, '""');
+              // Wrap the text in quotes
+              return `"${text}"`;
+            }
+            return text;
+          }
+          
+          // Process each event
+          events.forEach(eventName => {
+            const eventData = data[eventName] || [];
+            
+            // Skip if no data
+            if (eventData.length === 0) return;
+            
+            // Add event name as header
+            csvContent += `${escapeCSV(eventName)}\n`;
+            
+            // Add header row
+            const headers = isTeamType ? 
+              ['S.No.', 'Team Name', 'Team ID', 'College', 'Members'] : 
+              ['S.No.', 'PID', 'Name', 'College', 'Phone Number'];
+            
+            csvContent += headers.map(escapeCSV).join(',') + '\n';
+            
+            // Add data rows
+            eventData.forEach((item, index) => {
+              const row = [];
+              
+              // Add serial number
+              row.push(index + 1);
+              
+              if (isTeamType) {
+                // Team data
+                row.push(item.team_name || '');
+                row.push(item.team_id || '');
+                
+                // Add college
+                const college = item.members && item.members.length > 0 ? item.members[0].college : '';
+                row.push(college || '');
+                
+                // Format members
+                let membersText = '';
+                if (item.members && item.members.length > 0) {
+                  membersText = item.members.map(m => `${m.name} (${m.pid})`).join('; ');
+                } else {
+                  membersText = 'No members';
+                }
+                row.push(membersText);
+              } else {
+                // Individual data
+                row.push(item.pid || '');
+                row.push(item.name || '');
+                row.push(item.college || '');
+                row.push(item.phoneno || '');
+              }
+              
+              csvContent += row.map(escapeCSV).join(',') + '\n';
+            });
+            
+            // Add a blank line between events
+            csvContent += '\n';
+          });
+          
+          // Create a Blob containing the CSV data
+          const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+          
+          // Create a link element
+          const link = document.createElement('a');
+          
+          // Create a URL for the blob
+          const url = URL.createObjectURL(blob);
+          
+          // Set link properties
+          link.setAttribute('href', url);
+          link.setAttribute('download', 'TECHVYOM_2025_Students_List.csv');
+          link.style.visibility = 'hidden';
+          
+          // Add link to document, click it, and remove it
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } catch (error) {
+          console.error('Error exporting to CSV:', error);
+          alert('Error exporting to CSV. Please try again.');
+        }
+      }
+      
+      // Function to print as PDF
+      function printAsPDF() {
+        // Create a print-specific stylesheet to ensure proper formatting
+        const printStyle = document.createElement('style');
+        printStyle.id = 'print-style';
+        printStyle.textContent = `
+          @media print {
+            body * {
+              visibility: hidden;
+            }
+            #results-container, #results-container * {
+              visibility: visible;
+            }
+            .action-buttons {
+              display: none !important;
+            }
+            #results-container {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+            }
+            .result-table-container {
+              page-break-after: always;
+              margin-bottom: 20px;
+            }
+            .result-table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            .result-table th, .result-table td {
+              border: 1px solid #333;
+              padding: 8px;
+            }
+            .table-header {
+              font-size: 16px;
+              font-weight: bold;
+              margin-bottom: 10px;
+            }
+            .print-title {
+              text-align: center;
+              margin-bottom: 30px;
+            }
+            .main-title {
+              font-size: 24px;
+              font-weight: bold;
+              margin-bottom: 5px;
+            }
+            .sub-title {
+              font-size: 18px;
+              margin-top: 5px;
+            }
+          }
+        `;
+        document.head.appendChild(printStyle);
+        
+        // Trigger print dialog
+        window.print();
+        
+        // Remove print-specific stylesheet after printing
+        setTimeout(() => {
+          const styleElem = document.getElementById('print-style');
+          if (styleElem) {
+            styleElem.remove();
+          }
+        }, 1000);
+      }
+
+      // Add active class to navigation item
+      const currentPath = window.location.pathname;
+      const navLinks = document.querySelectorAll('nav ul li a');
+      
+      navLinks.forEach(link => {
+        if ((currentPath === '/print-lists' && link.textContent.includes('Registration'))) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
