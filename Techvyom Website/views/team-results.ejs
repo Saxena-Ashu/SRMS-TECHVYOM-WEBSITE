@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Team Database - TECHVYOM 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #001f3f, #000);
+      color: #fff;
+      padding-top: 90px; /* Adjusted for larger nav */
+    }
+
+    /* Super-Stylish Navigation Bar (matching confirmation.ejs) */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 15, 30, 0.6);
+      backdrop-filter: blur(12px);
+      padding: 15px 30px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 200, 0.3);
+      border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    nav::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, 
+        rgba(0, 255, 200, 0.05) 0%, 
+        transparent 100%);
+      transition: all 0.5s ease;
+      pointer-events: none;
+    }
+
+    nav:hover::before {
+      top: 0;
+    }
+
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.5),
+        transparent);
+      transition: left 1.5s ease;
+    }
+
+    nav:hover::after {
+      left: 100%;
+    }
+
+    nav .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 255, 200, 0.4) 0%, transparent 70%);
+      filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    nav .logo-container:hover .logo-glow {
+      opacity: 1;
+    }
+
+    nav .logo-icon {
+      font-size: 2rem;
+      color: #00ffc8;
+      animation: pulse 2s infinite ease-in-out;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 31, 63, 0.6);
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    nav .logo-container:hover .logo-icon {
+      transform: rotate(360deg);
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);
+    }
+
+    nav .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+      position: relative;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    nav .logo-container:hover .logo {
+      letter-spacing: 3px;
+      text-shadow: 0 0 15px rgba(0, 255, 200, 0.8);
+    }
+
+    nav .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transition: width 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      border-radius: 2px;
+    }
+
+    nav .logo-container:hover .logo::after {
+      width: 100%;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: #c0f0ff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 12px 20px;
+      border: 1px solid rgba(0, 255, 200, 0.15);
+      border-radius: 30px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 31, 63, 0.3);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    nav ul li a i {
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 200, 0.1), 
+        transparent);
+      transition: all 0.6s ease;
+      z-index: -1;
+    }
+
+    nav ul li a:hover::before {
+      left: 100%;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #00ffc8, #00c8ff);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+      opacity: 0;
+    }
+
+    nav ul li a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+      opacity: 1;
+    }
+
+    nav ul li a:hover {
+      color: #00ffc8;
+      border-color: rgba(0, 255, 200, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 255, 200, 0.3);
+      background: rgba(0, 31, 63, 0.6);
+      letter-spacing: 1px;
+    }
+
+    nav ul li a:hover i {
+      transform: scale(1.3);
+      color: #00ffc8;
+    }
+
+    /* Active item styling */
+    nav ul li a.active {
+      color: #00ffc8;
+      background: rgba(0, 31, 63, 0.6);
+      border-color: rgba(0, 255, 200, 0.4);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 255, 200, 0.2);
+    }
+
+    nav ul li a.active::after {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    .nav-indicator {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00ffc8;
+      box-shadow: 0 0 10px #00ffc8;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    nav ul li a:hover .nav-indicator {
+      opacity: 1;
+    }
+
+    .database-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      background-color: rgba(0, 31, 63, 0.5);
+      color: #c0f0ff;
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+    }
+
+    .tab-btn.active {
+      background-color: rgba(0, 255, 200, 0.2);
+      color: #00ffc8;
+      border-color: #00ffc8;
+      box-shadow: 0 5px 15px rgba(0, 255, 200, 0.2);
+    }
+
+    .tab-btn:hover {
+      background-color: rgba(0, 255, 200, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .print-btn {
+      padding: 10px 20px;
+      background-color: #ff9900;
+      color: white;
+      border: 1px solid rgba(255, 153, 0, 0.3);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+    }
+    
+    .print-btn:hover {
+      background-color: #ff8800;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 153, 0, 0.2);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 120px auto 40px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 0 20px #00ffc8;
+      overflow-x: auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffc8;
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 10px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+
+    .search-box input {
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      transition: all 0.3s ease;
+      flex: 1 1 auto;
+      min-width: 120px;
+    }
+
+    .search-box input:hover {
+      transform: scale(1.1);
+      z-index: 1;
+    }
+
+    .team-card {
+      background: rgba(0, 31, 63, 0.5);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0, 255, 200, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 255, 200, 0.3);
+    }
+
+    .team-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.3);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .team-header h3 {
+      margin: 0;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    .team-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Enhanced Edit Button Styling */
+    .edit-btn {
+      background: linear-gradient(135deg, #4f94ff, #0066ff);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-btn:hover {
+      background: linear-gradient(135deg, #0066ff, #0044cc);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .edit-btn i {
+      transition: all 0.3s ease;
+    }
+
+    .edit-btn:hover i {
+      transform: scale(1.2);
+    }
+
+    /* Enhanced Delete Button Styling */
+    .delete-btn {
+      background: linear-gradient(135deg, #ff4f4f, #cc0000);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .delete-btn:hover {
+      background: linear-gradient(135deg, #cc0000, #990000);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .delete-btn i {
+      transition: all 0.3s ease;
+    }
+
+    .delete-btn:hover i {
+      transform: scale(1.2);
+    }
+
+    .team-details {
+      margin-bottom: 15px;
+    }
+
+    .team-details p {
+      margin: 5px 0;
+    }
+
+    .member-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .member-list li {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 8px 12px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .member-pid {
+      color: #00ffc8;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: all 0.3s ease;
+    }
+    
+    .member-pid:hover {
+      color: #00c8ff;
+      text-decoration: none;
+    }
+
+    .team-events {
+      margin-top: 15px;
+    }
+
+    .event-tag {
+      display: inline-block;
+      background: rgba(0, 255, 200, 0.2);
+      color: #00ffc8;
+      padding: 5px 10px;
+      border-radius: 15px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .message {
+      background-color: #00ffc8;
+      color: black;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      text-align: center;
+      display: none;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1050;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background: rgba(0, 31, 63, 0.95);
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #00ffc8;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: 0 0 25px rgba(0, 255, 200, 0.5);
+      animation: modalFadeIn 0.3s;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    @keyframes modalFadeIn {
+      from {opacity: 0; transform: translateY(-30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .modal-header {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .modal-body {
+      margin-bottom: 20px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #00ffc8;
+      text-decoration: none;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #00ffc8;
+    }
+    
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    
+    .save-btn {
+      background-color: #00ffc8;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    .save-btn:hover {
+      background-color: #00e0b0;
+    }
+    
+    .events-selection {
+      max-height: 300px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    .club-btn {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 5px;
+      background: rgba(0, 31, 63, 0.8);
+      color: #00ffc8;
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      border-radius: 5px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .club-btn:hover {
+      background-color: rgba(0, 255, 200, 0.2);
+    }
+    
+    .event-options {
+      display: none;
+      margin-left: 15px;
+      margin-bottom: 10px;
+    }
+    
+    .event-options label {
+      display: block;
+      padding: 5px;
+      margin-bottom: 3px;
+      cursor: pointer;
+    }
+    
+    .event-options label:hover {
+      background-color: rgba(0, 255, 200, 0.1);
+      border-radius: 3px;
+    }
+    
+    .arrow {
+      float: right;
+    }
+
+    /* Member management styles */
+    .member-management {
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+
+    .edit-member-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 15px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .edit-member-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      margin-bottom: 5px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+    }
+
+    .remove-member-btn {
+      background-color: #ff4f4f;
+      color: white;
+      border: none;
+      padding: 3px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .remove-member-btn:hover {
+      background-color: #ff0000;
+    }
+
+    .add-member-form {
+      margin-top: 10px;
+    }
+
+    .add-member-inputs {
+      display: flex;
+      gap: 5px;
+    }
+
+    .member-search-input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+    }
+
+    .add-member-btn {
+      background-color: #4fff73;
+      color: black;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .add-member-btn:hover {
+      background-color: #30e050;
+    }
+
+    /* Student details modal */
+    .student-modal {
+      display: none;
+      position: fixed;
+      z-index: 1050;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .student-modal-content {
+      background: rgba(0, 31, 63, 0.95);
+      margin: 5% auto;
+      padding: 30px;
+      border: 1px solid #00ffc8;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 0 30px rgba(0, 255, 200, 0.5);
+      animation: modalFadeIn 0.3s;
+    }
+    
+    .student-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.3);
+    }
+    
+    .student-modal-header h3 {
+      margin: 0;
+      color: #00ffc8;
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    .close-student-modal {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .close-student-modal:hover {
+      color: #00ffc8;
+    }
+    
+    .student-details {
+      margin-top: 20px;
+    }
+    
+    .student-detail-row {
+      display: flex;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.1);
+    }
+    
+    .student-detail-label {
+      flex: 1;
+      font-weight: bold;
+      color: #00ffc8;
+    }
+    
+    .student-detail-value {
+      flex: 2;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    /* Password Modal Styles */
+    .password-error {
+      color: #ff4f4f;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Password Modal Specific Styles */
+    #passwordModal .modal-content {
+      max-width: 400px;
+    }
+
+    #passwordModal .modal-body {
+      padding: 20px;
+    }
+
+    #confirm-password-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      margin-top: 15px;
+    }
+
+    #admin-password {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo-container">
+      <div class="logo-glow"></div>
+      <div class="logo-icon"><i class="fas fa-microchip"></i></div>
+      <div class="logo">TECHVYOM 2025</div>
+    </div>
+    <ul>
+      <li>
+        <a href="home.html">
+          <i class="fas fa-home"></i> Home
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="about.html">
+          <i class="fas fa-info-circle"></i> About
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="events.html">
+          <i class="fas fa-calendar-alt"></i> Events
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li>
+        <a href="register.html">
+          <i class="fas fa-user-plus"></i> Registration
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="contact.html">
+          <i class="fas fa-envelope"></i> Contact
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Team Database</h2>
+    <div id="message" class="message"></div>
+
+    <div class="database-tabs">
+      <a href="/results" class="tab-btn"><i class="fas fa-user"></i> Individual Registrations</a>
+      <a href="/team-results" class="tab-btn active"><i class="fas fa-users"></i> Team Registrations</a>
+      <a href="/print-lists?type=team" class="print-btn"><i class="fas fa-print"></i> Print Event Lists</a>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="search-team-id" placeholder="Search by Team ID" oninput="filterTeams()">
+      <input type="text" id="search-team-name" placeholder="Search by Team Name" oninput="filterTeams()">
+      <input type="text" id="search-pid" placeholder="Search by Member PID" oninput="filterTeams()">
+      <input type="text" id="search-name" placeholder="Search by Member Name" oninput="filterTeams()">
+      <input type="text" id="search-event" placeholder="Search by Event" oninput="filterTeams()">
+    </div>
+
+    <div id="team-container">
+      <% teams.forEach(team => { %>
+        <div class="team-card" data-team-id="<%= team.team_id %>" data-team-name="<%= team.team_name %>">
+          <div class="team-header">
+            <h3><%= team.team_name %> <small style="font-size: 0.8rem; opacity: 0.8;">(<%= team.team_id %>)</small></h3>
+            <div class="team-actions">
+              <button class="edit-btn" data-id="<%= team.id %>">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button class="delete-btn" data-id="<%= team.id %>">
+                <i class="fas fa-trash"></i> Delete
+              </button>
+            </div>
+          </div>
+          
+          <div class="team-details">
+            <p><strong>Members:</strong></p>
+            <ul class="member-list">
+              <% team.members.forEach(member => { %>
+                <li>
+                  <span><span class="member-pid" onclick="showStudentDetails('<%= member.pid %>')"><%= member.pid %></span> - <%= member.name %></span>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+          
+          <div class="team-events">
+            <p><strong>Events:</strong></p>
+            <% if (team.events && team.events.length > 0) { %>
+              <% team.events.forEach(event => { %>
+                <span class="event-tag"><%= event %></span>
+              <% }) %>
+            <% } else { %>
+              <p>No events selected</p>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Edit Team</h3>
+      </div>
+      <div class="modal-body">
+        <form id="editForm">
+          <input type="hidden" id="edit-id">
+          <input type="hidden" id="edit-team-id">
+          
+          <div class="form-group">
+            <label for="edit-team-name">Team Name</label>
+            <input type="text" id="edit-team-name" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Team Members</label>
+            <div class="member-management">
+              <ul id="edit-member-list" class="edit-member-list">
+                <!-- Members will be populated here -->
+              </ul>
+              
+              <div class="add-member-form">
+                <div class="add-member-inputs">
+                  <input type="text" id="new-member-pid" class="member-search-input" placeholder="Enter PID (e.g., P-1234)">
+
+                  <button type="button" id="add-member-btn" class="add-member-btn"><i class="fas fa-plus"></i> Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Events</label>
+            <div class="events-selection">
+              <!-- Illuminati Club -->
+              <button type="button" class="club-btn" data-target="illuminatiEvents">
+                Illuminati Club <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="illuminatiEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Illuminati Club - Code Quest"> Code Quest
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Illuminati Club - Clone The Web"> Clone The Web
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Illuminati Club - Code Breakers"> Code Breakers
+                </label>
+              </div>
+              
+              <!-- Equinox Club -->
+              <button type="button" class="club-btn" data-target="equinoxEvents">
+                Equinox Club <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="equinoxEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Equinox Club - Code Relay"> Code Relay
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Equinox Club - Code Hunt"> Code Hunt
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Equinox Club - Big Bounty"> Big Bounty
+                </label>
+              </div>
+
+              <!-- Synergy Club -->
+              <button type="button" class="club-btn" data-target="synergyEvents">
+                Synergy Club <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="synergyEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Synergy Club - Junk Wars"> Junk Wars
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Synergy Club - Pirates of the Caribbean(Aqua Race)"> Pirates of the Caribbean(Aqua Race)
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Synergy Club - Drag and Place"> Drag and Place
+                </label>
+              </div>
+
+              <!-- Robotrax Club -->
+              <button type="button" class="club-btn" data-target="robotraxEvents">
+                Robotrax Club <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="robotraxEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Robotrax Club - Line Follower Robot(Wrong Turn)"> Line Follower Robot(Wrong Turn)
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Robotrax Club - Run Bhumi(Robowar)"> Run Bhumi(Robowar)
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Robotrax Club - Robo-Soccer(Wild Soccer)"> Robo-Soccer(Wild Soccer)
+                </label>
+              </div>
+
+              <!-- Aeronautics Club -->
+              <button type="button" class="club-btn" data-target="aeronauticsEvents">
+                Aeronautics Club <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="aeronauticsEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Aeronautics Club - Catapult"> Catapult
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Aeronautics Club - Bridge Building"> Bridge Building
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Aeronautics Club - Assemble Dissemble"> Assemble Dissemble
+                </label>
+              </div>
+
+              <!-- Literary Club -->
+              <button type="button" class="club-btn" data-target="literaryEvents">
+                Literary Club <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="literaryEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Literary Club - Cryptic Hunt"> Cryptic Hunt
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Literary Club - Verses of the Valley"> Verses of the Valley
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Literary Club - Extempore"> Extempore
+                </label>
+              </div>
+
+              <!-- Pharmquimica Club -->
+              <button type="button" class="club-btn" data-target="pharmquimicaEvents">
+                Pharmquimica Club <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="pharmquimicaEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Pharmquimica Club - Aavishkarak"> Aavishkarak
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Pharmquimica Club - Pharm-Desk"> Pharm-Desk
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Pharmquimica Club - PharmDraw"> PharmDraw
+                </label>
+              </div>
+
+              <!-- Management Club -->
+              <button type="button" class="club-btn" data-target="managementEvents">
+                Management Club <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="managementEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Management Club - Admad"> Ad Mad
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Management Club - Business Quiz"> Business Quiz
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Management Club - Business Plan"> Business Plan
+                </label>
+              </div>
+
+              <!-- Media Relations Club -->
+              <button type="button" class="club-btn" data-target="mediaRelationsEvents">
+                Media Relations Club <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="mediaRelationsEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Media Relations Club - Byte & Frame"> Byte & Frame
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Media Relations Club - Create Logo">Create Logo
+                </label>
+                
+              </div>
+
+              <!-- Open Events -->
+              <button type="button" class="club-btn" data-target="openEvents">
+                Open Events <span class="arrow">▼</span>
+              </button>
+              <div class="event-options" id="openEvents">
+                <label>
+                  <input type="checkbox" name="events" value="Open Events - Tech Gallery"> Tech Gallery
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Open Events - Research Paper Event"> Research Paper Event
+                </label>
+                <label>
+                  <input type="checkbox" name="events" value="Open Events - Lan War(BGMI)"> Lan War(BGMI)
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="save-btn">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Student Details Modal -->
+  <div id="studentModal" class="student-modal">
+    <div class="student-modal-content">
+      <div class="student-modal-header">
+        <h3>Student Details</h3>
+        <span class="close-student-modal" onclick="closeStudentModal()">&times;</span>
+      </div>
+      <div class="student-details" id="studentDetailsContent">
+        <!-- Student details will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Password Modal -->
+  <div id="passwordModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-header">
+        <span class="close" onclick="closePasswordModal()">&times;</span>
+        <h3>Admin Authentication</h3>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="admin-password">Enter Admin Password:</label>
+          <input type="password" id="admin-password" class="member-search-input">
+        </div>
+        <button type="button" id="confirm-password-btn" class="save-btn">Confirm</button>
+        <div id="password-error" class="password-error"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Password configuration - CHANGE THIS TO YOUR PASSWORD
+    const ADMIN_PASSWORD = "EaSy";
+
+    // Track the pending action
+    let pendingAction = {
+      type: null,
+      id: null
+    };
+
+    // Filter teams based on search inputs
+    function filterTeams() {
+      const teamId = document.getElementById('search-team-id').value.toLowerCase();
+      const teamName = document.getElementById('search-team-name').value.toLowerCase();
+      const pid = document.getElementById('search-pid').value.toLowerCase();
+      const name = document.getElementById('search-name').value.toLowerCase();
+      const event = document.getElementById('search-event').value.toLowerCase();
+      
+      const teamCards = document.querySelectorAll('.team-card');
+      
+      teamCards.forEach(card => {
+        const cardTeamId = card.getAttribute('data-team-id').toLowerCase();
+        const cardTeamName = card.getAttribute('data-team-name').toLowerCase();
+        
+        // Check member PIDs and names
+        const memberPids = Array.from(card.querySelectorAll('.member-pid')).map(el => el.textContent.toLowerCase());
+        const memberNames = Array.from(card.querySelectorAll('.member-list li')).map(el => el.textContent.toLowerCase());
+        
+        // Check events
+        const events = Array.from(card.querySelectorAll('.event-tag')).map(el => el.textContent.toLowerCase());
+        
+        // Check if card matches all search criteria
+        const matchesTeamId = cardTeamId.includes(teamId);
+        const matchesTeamName = cardTeamName.includes(teamName);
+        
+        // Check if any member PID matches search
+        const matchesPid = memberPids.some(p => p.includes(pid));
+        
+        // Check if any member name matches search
+        const matchesName = memberNames.some(n => n.includes(name));
+        
+        // Check if any event matches search
+        const matchesEvent = event === '' || events.some(e => e.includes(event));
+        
+        if (matchesTeamId && matchesTeamName && (matchesPid || pid === '') && (matchesName || name === '') && matchesEvent) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+    
+    // Modal handling
+    const modal = document.getElementById('editModal');
+    const studentModal = document.getElementById('studentModal');
+    const passwordModal = document.getElementById('passwordModal');
+    let teamMembersCache = [];
+    
+    function openEditModal(id) {
+      pendingAction = {
+        type: 'edit',
+        id: id
+      };
+      document.getElementById('password-error').style.display = 'none';
+      document.getElementById('admin-password').value = '';
+      passwordModal.style.display = 'block';
+      document.getElementById('admin-password').focus();
+    }
+
+    function openDeleteModal(id) {
+      pendingAction = {
+        type: 'delete',
+        id: id
+      };
+      document.getElementById('password-error').style.display = 'none';
+      document.getElementById('admin-password').value = '';
+      passwordModal.style.display = 'block';
+      document.getElementById('admin-password').focus();
+    }
+
+    function verifyPassword() {
+      const enteredPassword = document.getElementById('admin-password').value;
+      
+      if (enteredPassword === ADMIN_PASSWORD) {
+        passwordModal.style.display = 'none';
+        
+        if (pendingAction.type === 'edit') {
+          _openEditModal(pendingAction.id);
+        } else if (pendingAction.type === 'delete') {
+          _confirmDelete(pendingAction.id);
+        }
+      } else {
+        document.getElementById('password-error').style.display = 'block';
+        document.getElementById('password-error').textContent = 'Incorrect password!';
+        document.getElementById('admin-password').focus();
+      }
+    }
+
+    function closePasswordModal() {
+      passwordModal.style.display = 'none';
+      pendingAction = {
+        type: null,
+        id: null
+      };
+    }
+
+    function _openEditModal(id) {
+      // Fetch team data
+      fetch(`/api/team/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('edit-id').value = data.id;
+          document.getElementById('edit-team-id').value = data.team_id;
+          document.getElementById('edit-team-name').value = data.team_name;
+          
+          // Set team members
+          teamMembersCache = data.members || [];
+          refreshMembersList();
+          
+          // Clear all event checkboxes
+          document.querySelectorAll('input[name="events"]').forEach(checkbox => {
+            checkbox.checked = false;
+          });
+          
+          // Check selected events
+          if (data.events && data.events.length > 0) {
+            data.events.forEach(event => {
+              const checkbox = document.querySelector(`input[name="events"][value="${event}"]`);
+              if (checkbox) checkbox.checked = true;
+            });
+          }
+          
+          modal.style.display = 'block';
+        })
+        .catch(error => {
+          console.error('Error fetching team:', error);
+          showMessage('Error fetching team data', false);
+        });
+    }
+    
+    function refreshMembersList() {
+      const memberList = document.getElementById('edit-member-list');
+      memberList.innerHTML = '';
+      
+      teamMembersCache.forEach((member, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span><span class="member-pid" onclick="showStudentDetails('${member.pid}')">${member.pid}</span> - ${member.name}</span>
+          <button type="button" class="remove-member-btn" data-index="${index}">
+            <i class="fas fa-minus"></i>
+          </button>
+        `;
+        memberList.appendChild(li);
+      });
+      
+      // Add event listeners to remove buttons
+      document.querySelectorAll('.remove-member-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const index = parseInt(this.getAttribute('data-index'));
+          teamMembersCache.splice(index, 1);
+          refreshMembersList();
+        });
+      });
+    }
+    
+    function closeModal() {
+      modal.style.display = 'none';
+      teamMembersCache = [];
+    }
+    
+    function closeStudentModal() {
+      studentModal.style.display = 'none';
+    }
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+      if (event.target === studentModal) {
+        closeStudentModal();
+      }
+      if (event.target === passwordModal) {
+        closePasswordModal();
+      }
+    };
+    
+    // Show student details when clicking on PID
+    function showStudentDetails(pid) {
+      fetch(`/api/student/${pid}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            showMessage(data.error, false);
+            return;
+          }
+          
+          const studentDetails = document.getElementById('studentDetailsContent');
+          studentDetails.innerHTML = `
+            <div class="student-detail-row">
+              <div class="student-detail-label">PID:</div>
+              <div class="student-detail-value">${data.pid || 'N/A'}</div>
+            </div>
+            <div class="student-detail-row">
+              <div class="student-detail-label">Full Name:</div>
+              <div class="student-detail-value">${data.name || 'N/A'}</div>
+            </div>
+            <div class="student-detail-row">
+              <div class="student-detail-label">Phone Number:</div>
+              <div class="student-detail-value">${data.phoneno || 'N/A'}</div>
+            </div>
+            
+            <div class="student-detail-row">
+              <div class="student-detail-label">Roll Number:</div>
+              <div class="student-detail-value">${data.rollno || 'N/A'}</div>
+            </div>
+            
+            <div class="student-detail-row">
+              <div class="student-detail-label">College Name:</div>
+              <div class="student-detail-value">${data.college || 'N/A'}</div>
+            </div>
+            <div class="student-detail-row">
+              <div class="student-detail-label">Course:</div>
+              <div class="student-detail-value">${data.course || 'N/A'}</div>
+            </div>
+            <div class="student-detail-row">
+              <div class="student-detail-label">Year:</div>
+              <div class="student-detail-value">${data.year || 'N/A'}</div>
+            </div>
+            <div class="student-detail-row">
+              <div class="student-detail-label">Events:</div>
+              <div class="student-detail-value">
+                ${data.events && data.events.length > 0 
+                  ? data.events.map(event => `<span class="event-tag">${event}</span>`).join(' ') 
+                  : 'No events registered'}
+              </div>
+            </div>
+          `;
+          
+          studentModal.style.display = 'block';
+        })
+        .catch(error => {
+          console.error('Error fetching student details:', error);
+          showMessage('Error fetching student details', false);
+        });
+    }
+    
+    // Add member functionality
+    document.getElementById('add-member-btn').addEventListener('click', function() {
+      const pidInput = document.getElementById('new-member-pid');
+      const pid = pidInput.value.trim();
+      
+      if (pid === '') return;
+      
+      // Check if PID already exists in the team
+      if (teamMembersCache.some(member => member.pid === pid)) {
+        showMessage('This member is already in the team', false);
+        return;
+      }
+      
+      // Fetch member data from API
+      fetch(`/api/find-member?pid=${pid}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.found) {
+            teamMembersCache.push({
+              pid: data.pid,
+              name: data.name
+            });
+            refreshMembersList();
+            pidInput.value = '';
+          } else {
+            showMessage('PID not found', false);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching member:', error);
+          showMessage('Error looking up PID', false);
+        });
+    });
+    
+    // Toggle event options
+    document.querySelectorAll('.club-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement.style.display === 'block') {
+          targetElement.style.display = 'none';
+          this.querySelector('.arrow').textContent = '▼';
+        } else {
+          targetElement.style.display = 'block';
+          this.querySelector('.arrow').textContent = '▲';
+        }
+      });
+    });
+    
+    // Handle edit form submission
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const id = document.getElementById('edit-id').value;
+      const teamName = document.getElementById('edit-team-name').value;
+      
+      // Get member PIDs
+      const memberPids = teamMembersCache.map(member => member.pid);
+      
+      // Get selected events
+      const events = [];
+      document.querySelectorAll('input[name="events"]:checked').forEach(checkbox => {
+        events.push(checkbox.value);
+      });
+      
+      // Check if team has members
+      if (memberPids.length === 0) {
+        showMessage('Team must have at least one member', false);
+        return;
+      }
+      
+      // Send update request
+      fetch(`/api/team/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          team_name: teamName,
+          member_pids: memberPids,
+          events: events
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          closeModal();
+          showMessage('Team updated successfully', true);
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        } else {
+          showMessage(data.message || 'Error updating team', false);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        showMessage('Error updating team', false);
+      });
+    });
+    
+    // Delete confirmation
+    function _confirmDelete(id) {
+      if (confirm('Are you sure you want to delete this team? This action cannot be undone.')) {
+        fetch(`/api/team/${id}`, {
+          method: 'DELETE',
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            showMessage('Team deleted successfully', true);
+            // Remove the team card
+            const teamCard = document.querySelector(`.team-card[data-id="${id}"]`);
+            if (teamCard) teamCard.remove();
+            else location.reload();
+          } else {
+            showMessage('Error deleting team', false);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          showMessage('Error deleting team', false);
+        });
+      }
+    }
+    
+    // Show message
+    function showMessage(text, isSuccess) {
+      const messageElem = document.getElementById('message');
+      messageElem.textContent = text;
+      messageElem.style.backgroundColor = isSuccess ? '#4fff73' : '#ff4f4f';
+      messageElem.style.display = 'block';
+      
+      setTimeout(() => {
+        messageElem.style.display = 'none';
+      }, 3000);
+    }
+    
+    // PID autocomplete
+    document.getElementById('new-member-pid').addEventListener('input', function() {
+      const query = this.value.trim();
+      if (query.length >= 2) {
+        fetch(`/api/search-pids?term=${query}`)
+          .then(response => response.json())
+          .then(data => {
+            // You can implement an autocomplete dropdown here
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Error fetching PIDs:', error);
+          });
+      }
+    });
+    
+    // Add active class to navigation item
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      const navLinks = document.querySelectorAll('nav ul li a');
+      
+      navLinks.forEach(link => {
+        if ((currentPath === '/team-results' && link.textContent.includes('Team Registration'))) {
+          link.classList.add('active');
+        }
+      });
+
+      // Set up event listeners for edit and delete buttons
+      document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          openEditModal(id);
+        });
+      });
+
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          openDeleteModal(id);
+        });
+      });
+
+      // Password modal events
+      document.getElementById('confirm-password-btn').addEventListener('click', verifyPassword);
+      
+      document.getElementById('admin-password').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          verifyPassword();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
