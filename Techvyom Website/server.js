@@ -277,7 +277,10 @@ app.get('/team-results', async (req, res) => {
       return {
         ...team.toObject(),
         members: members.map(m => m.registration_id),
-        college: members.length > 0 ? members[0].registration_id.college : '',
+        college: members.length > 0 && members[0].registration_id
+  ? members[0].registration_id.college
+  : '',
+
         events: events.map(e => e.event_name)
       };
     }));
@@ -899,7 +902,10 @@ app.get('/api/team/:id', async (req, res) => {
     res.json({
       ...team.toObject(),
       members,
-      college: members.length > 0 ? members[0].registration_id.college : '',
+      college: members.length > 0 && members[0].registration_id
+  ? members[0].registration_id.college
+  : '',
+
       events: events.map(e => e.event_name)
     });
   } catch (err) {
