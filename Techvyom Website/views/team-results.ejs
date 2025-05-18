@@ -1646,22 +1646,29 @@
 
  fetch(`/api/team/${id}`)
   .then(response => {
-    console.log('Raw response:', response); // ✅ ADD THIS for debugging
-
-    const contentType = response.headers.get('content-type');
-    if (!response.ok) {
-      throw new Error(`Server returned error: ${response.status}`);
-    }
-
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new Error(`Expected JSON but got: ${contentType}`);
-    }
-
+    if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
     return response.json();
   })
   .then(data => {
-    console.log('Team data received:', data);
-    openEditModal(data); // or whatever function you use
+    document.getElementById('edit-id').value = data._id;
+    document.getElementById('edit-team-id').value = data.team_id;
+    document.getElementById('edit-team-name').value = data.team_name;
+
+    teamMembersCache = data.members || [];
+    refreshMembersList();
+
+    document.querySelectorAll('input[name="events"]').forEach(checkbox => {
+      checkbox.checked = false;
+    });
+
+    if (data.events && data.events.length > 0) {
+      data.events.forEach(event => {
+        const checkbox = document.querySelector(`input[name="events"][value="${event}"]`);
+        if (checkbox) checkbox.checked = true;
+      });
+    }
+
+    modal.style.display = 'block';
   })
   .catch(error => {
     console.error('Error fetching team:', error);
