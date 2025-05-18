@@ -2,8 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./db');
-const mongoose = db.connection.constructor.base; // gets actual mongoose instance
-
+const mongoose = require('mongoose'); // ✅ This gives you access to mongoose.Types
 const {
   initDatabase,
   Registration,
@@ -11,7 +10,8 @@ const {
   Team,
   TeamMember,
   TeamEvent
-} = db;
+} = require('./db');
+
 
 
 const app = express();
