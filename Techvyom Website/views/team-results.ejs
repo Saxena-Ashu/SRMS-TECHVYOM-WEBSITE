@@ -1302,6 +1302,13 @@
     function _openEditModal(id) {
       // Fetch team data
       fetch(`/api/team/${id}`)
+
+        .then(response => {
+    if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
+    return response.json();
+  })
+
+
         .then(response => response.json())
         .then(data => {
           document.getElementById('edit-id').value = data.id;
