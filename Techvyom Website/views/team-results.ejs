@@ -923,10 +923,16 @@
             <p><strong>Members:</strong></p>
             <ul class="member-list">
               <% team.members.forEach(member => { %>
-                <li>
-                  <span><span class="member-pid" onclick="showStudentDetails('<%= member.pid %>')"><%= member.pid %></span> - <%= member.name %></span>
-                </li>
-              <% }) %>
+  <% if (member) { %>
+    <li>
+      <span>
+        <span class="member-pid" onclick="showStudentDetails('<%= member.pid %>')">
+          <%= member.pid %>
+        </span> - <%= member.name %>
+      </span>
+    </li>
+  <% } %>
+<% }) %>
             </ul>
           </div>
           
