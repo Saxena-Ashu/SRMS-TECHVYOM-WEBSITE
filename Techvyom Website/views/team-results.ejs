@@ -1299,46 +1299,49 @@
       };
     }
 
-    function _openEditModal(id) {
-      // Fetch team data
-      fetch(`/api/team/${id}`)
+      function _openEditModal(id) {
+    const modal = document.getElementById('editModal');
 
-        .then(response => {
-    if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
-    return response.json();
-  })
+    console.log('Opening edit modal for team ID:', id); // Debug log
 
+    fetch(`/api/team/${id}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Fetch failed: ${response.status}`);
+        }
+        return response.json(); // ✅ Only one .json() call
+      })
+      .then(data => {
+        // Fill form fields
+        document.getElementById('edit-id').value = data._id;
+        document.getElementById('edit-team-id').value = data.team_id;
+        document.getElementById('edit-team-name').value = data.team_name;
 
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById('edit-id').value = data.id;
-          document.getElementById('edit-team-id').value = data.team_id;
-          document.getElementById('edit-team-name').value = data.team_name;
-          
-          // Set team members
-          teamMembersCache = data.members || [];
-          refreshMembersList();
-          
-          // Clear all event checkboxes
-          document.querySelectorAll('input[name="events"]').forEach(checkbox => {
-            checkbox.checked = false;
-          });
-          
-          // Check selected events
-          if (data.events && data.events.length > 0) {
-            data.events.forEach(event => {
-              const checkbox = document.querySelector(`input[name="events"][value="${event}"]`);
-              if (checkbox) checkbox.checked = true;
-            });
-          }
-          
-          modal.style.display = 'block';
-        })
-        .catch(error => {
-          console.error('Error fetching team:', error);
-          showMessage('Error fetching team data', false);
+        // Cache and render members
+        teamMembersCache = data.members || [];
+        refreshMembersList();
+
+        // Clear all event checkboxes
+        document.querySelectorAll('input[name="events"]').forEach(checkbox => {
+          checkbox.checked = false;
         });
-    }
+
+        // Re-check only selected ones
+        if (data.events && data.events.length > 0) {
+          data.events.forEach(event => {
+            const checkbox = document.querySelector(`input[name="events"][value="${event}"]`);
+            if (checkbox) checkbox.checked = true;
+          });
+        }
+
+        // Show modal
+        modal.style.display = 'block';
+      })
+      .catch(error => {
+        console.error('Error fetching team:', error);
+        showMessage('Error fetching team data', false);
+      });
+  }
     
     function refreshMembersList() {
       const memberList = document.getElementById('edit-member-list');
