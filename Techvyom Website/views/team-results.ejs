@@ -1644,21 +1644,30 @@
           function fetchTeamData(id) {
   console.log('Fetching team with ID:', id); // ✅ Debug log
 
-  fetch(`/api/team/${id}`)
+ fetch(`/api/team/${id}`)
   .then(response => {
-    if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) {
-      throw new Error(`Invalid response: status=${response.status}, content-type=${response.headers.get('content-type')}`);
+    console.log('Raw response:', response); // ✅ ADD THIS for debugging
+
+    const contentType = response.headers.get('content-type');
+    if (!response.ok) {
+      throw new Error(`Server returned error: ${response.status}`);
     }
+
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error(`Expected JSON but got: ${contentType}`);
+    }
+
     return response.json();
   })
   .then(data => {
-    console.log('Fetched team:', data);
-    openEditModal(data);
+    console.log('Team data received:', data);
+    openEditModal(data); // or whatever function you use
   })
   .catch(error => {
     console.error('Error fetching team:', error);
     showMessage('Error fetching team data', false);
   });
+
 
 }
 
