@@ -889,7 +889,13 @@ app.get('/api/events', async (req, res) => {
 // API route to get a single team
 app.get('/api/team/:id', async (req, res) => {
   const id = req.params.id;
-  
+  console.log('GET /api/team/:id called with:', id);
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    console.log('Invalid team ID format');
+    return res.status(400).json({ error: 'Invalid team ID' });
+  }
+
   try {
     const team = await Team.findById(id);
     if (!team) {
@@ -898,24 +904,25 @@ app.get('/api/team/:id', async (req, res) => {
 
     const members = await TeamMember.find({ team_id: team._id })
       .populate('registration_id', 'pid name college');
-    
+
     const events = await TeamEvent.find({ team_id: team._id }, 'event_name');
-    
+
     res.json({
       ...team.toObject(),
-  members: members
-    .filter(m => m.registration_id)
-    .map(m => m.registration_id),
-  college: members.length > 0 && members[0].registration_id
-    ? members[0].registration_id.college
-    : '',
-  events: events.map(e => e.event_name)
+      members: members
+        .filter(m => m.registration_id)
+        .map(m => m.registration_id),
+      college: members.length > 0 && members[0].registration_id
+        ? members[0].registration_id.college
+        : '',
+      events: events.map(e => e.event_name)
     });
   } catch (err) {
     console.error('Get team error:', err);
-    res.status(500).json({ error: 'Database error' });
+    res.status(500).json({ error: 'Database error', details: err.message });
   }
 });
+
 
 // Route to delete a team
 app.delete('/api/team/:id', async (req, res) => {
