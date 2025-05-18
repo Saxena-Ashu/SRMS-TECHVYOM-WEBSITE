@@ -1637,6 +1637,34 @@
         }
       });
     });
+
+
+
+
+          function fetchTeamData(id) {
+  console.log('Fetching team with ID:', id); // ✅ Debug log
+
+  fetch(`/api/team/${id}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Fetch failed with status ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Fetched team data:', data); // ✅ View structure
+      openEditModal(data); // or however you show the modal
+    })
+    .catch(error => {
+      console.error('Error fetching team data:', error);
+      showMessage('Error fetching team data', false);
+    });
+}
+
+
+
+
+
   </script>
 </body>
 </html>
