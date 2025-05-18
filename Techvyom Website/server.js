@@ -275,14 +275,16 @@ app.get('/team-results', async (req, res) => {
       const events = await TeamEvent.find({ team_id: team._id }, 'event_name');
       
       return {
-        ...team.toObject(),
-        members: members.map(m => m.registration_id),
-        college: members.length > 0 && members[0].registration_id
-  ? members[0].registration_id.college
-  : '',
+  ...team.toObject(),
+  members: members
+    .filter(m => m.registration_id)
+    .map(m => m.registration_id),
+  college: members.length > 0 && members[0].registration_id
+    ? members[0].registration_id.college
+    : '',
+  events: events.map(e => e.event_name)
+};
 
-        events: events.map(e => e.event_name)
-      };
     }));
 
     res.render('team-results', { teams: processedTeams });
@@ -901,12 +903,13 @@ app.get('/api/team/:id', async (req, res) => {
     
     res.json({
       ...team.toObject(),
-      members,
-      college: members.length > 0 && members[0].registration_id
-  ? members[0].registration_id.college
-  : '',
-
-      events: events.map(e => e.event_name)
+  members: members
+    .filter(m => m.registration_id)
+    .map(m => m.registration_id),
+  college: members.length > 0 && members[0].registration_id
+    ? members[0].registration_id.college
+    : '',
+  events: events.map(e => e.event_name)
     });
   } catch (err) {
     console.error('Get team error:', err);
